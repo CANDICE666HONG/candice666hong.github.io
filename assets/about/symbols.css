@@ -1,0 +1,78 @@
+/* Original Candice Hong marks: folded pointer, meeting points, pixel bloom.
+   Every change is a pure function of the parent's scroll progress (0–1). */
+.inline-symbol.symbol-cursor,
+.inline-symbol.symbol-touch,
+.inline-symbol.symbol-bloom {
+  width: 1.46em;
+  height: 1.3em;
+  margin-inline: .075em;
+  vertical-align: -.25em;
+}
+
+.inline-symbol .symbol-vector {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.inline-symbol .symbol-turn,
+.inline-symbol .symbol-fold,
+.inline-symbol .symbol-contact-left,
+.inline-symbol .symbol-contact-right,
+.inline-symbol .symbol-contact-core,
+.inline-symbol .symbol-petal,
+.inline-symbol .symbol-bloom-core {
+  transform-box: view-box;
+  transform-origin: 32px 32px;
+}
+
+.symbol-cursor .symbol-turn {
+  transform: rotate(calc(-18deg + var(--symbol-progress, 1) * 34deg));
+}
+.symbol-cursor .symbol-fold {
+  transform-origin: 33px 35px;
+  transform: rotate(calc(-9deg + var(--symbol-progress, 1) * 9deg))
+    scaleX(calc(.76 + var(--symbol-progress, 1) * .24));
+}
+
+.symbol-touch .symbol-turn {
+  transform: rotate(calc(-14deg + var(--symbol-progress, 1) * 28deg));
+}
+.symbol-touch .symbol-contact-left {
+  transform: translate(
+    calc(-4px + var(--symbol-progress, 1) * 4px),
+    calc(-3px + var(--symbol-progress, 1) * 3px)
+  );
+}
+.symbol-touch .symbol-contact-right {
+  transform: translate(
+    calc(4px - var(--symbol-progress, 1) * 4px),
+    calc(3px - var(--symbol-progress, 1) * 3px)
+  );
+}
+.symbol-touch .symbol-contact-core {
+  transform: scale(calc(.58 + var(--symbol-progress, 1) * .42));
+}
+
+.symbol-bloom .symbol-turn {
+  transform: rotate(calc(-25deg + var(--symbol-progress, 1) * 58deg));
+}
+.symbol-bloom .symbol-petal {
+  transform: translateY(calc(2px - var(--symbol-progress, 1) * 4px));
+}
+.symbol-bloom .symbol-bloom-core {
+  transform: rotate(calc(var(--symbol-progress, 1) * -90deg))
+    scale(calc(.82 + var(--symbol-progress, 1) * .18));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inline-symbol .symbol-turn,
+  .inline-symbol .symbol-fold,
+  .inline-symbol .symbol-contact-left,
+  .inline-symbol .symbol-contact-right,
+  .inline-symbol .symbol-contact-core,
+  .inline-symbol .symbol-petal,
+  .inline-symbol .symbol-bloom-core { transform: none; }
+}

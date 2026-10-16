@@ -1,15 +1,16 @@
-/* Standalone, buildless About page. Motion uses real text and CSS geometry. */
+/* The introduction is scrubbed by native scroll position, never by a clock. */
 (() => {
   "use strict";
   const body = document.body;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const paragraph = document.querySelector(".intro-text");
+  const intro = document.querySelector(".intro-scroll");
   const stage = document.querySelector(".intro-stage");
-  const toggle = document.getElementById("motion-toggle");
-  const replay = document.getElementById("replay");
+  const restart = document.getElementById("intro-start");
+  const position = document.getElementById("scroll-position");
   const menu = document.getElementById("site-menu");
   const menuTrigger = document.querySelector(".menu-trigger");
-  const controls = document.querySelector(".motion-controls");
+  const controls = document.querySelector(".scroll-controls");
 
   // Wrap only text nodes. Spaces remain real spaces and inline art stays decorative.
   for (const node of [...paragraph.childNodes]) {
@@ -27,75 +28,74 @@
     }
     node.replaceWith(fragment);
   }
-  const tokens = [...paragraph.querySelectorAll(".intro-word, .inline-symbol")];
-  // Reference cadence: grey copy first, then a phrase every ~0.4–0.7 s.
-  const FIRST_WORD_MS = 800;
-  const WORD_STEP_MS = 145;
-  let elapsed = 0;
-  let previousTime = 0;
+  const tokens = [...paragraph.querySelectorAll(".intro-word, .inline-symbol")].map((element, index, all) => ({
+    element,
+    symbol: element.classList.contains("inline-symbol"),
+    // Leave a short grey lead-in and a readable white hold at the end.
+    start: 0.035 + index / Math.max(1, all.length - 1) * 0.83,
+  }));
   let frame = 0;
-  let nextToken = 0;
-  let userPaused = false;
-  let stageVisible = true;
+  let lastProgress = -1;
   let leaving = false;
   let closeTimer = 0;
   let navigationTimer = 0;
 
-  function blocked() {
-    return userPaused || document.hidden || !stageVisible || menu.open || reducedMotion.matches || leaving;
+  function clamp(value) {
+    return Math.max(0, Math.min(1, value));
   }
-  function advance(now) {
+  function scrollProgress(top, travel) {
+    return travel > 0 ? clamp(-top / travel) : 1;
+  }
+  function updateScroll() {
     frame = 0;
-    if (blocked()) { previousTime = 0; return; }
-    if (previousTime) elapsed += Math.min(now - previousTime, 100);
-    previousTime = now;
-    while (nextToken < tokens.length && elapsed >= FIRST_WORD_MS + nextToken * WORD_STEP_MS) {
-      tokens[nextToken++].classList.add("is-lit");
+    if (document.hidden || menu.open || leaving) return;
+    const progress = reducedMotion.matches ? 1 : scrollProgress(
+      intro.getBoundingClientRect().top,
+      intro.offsetHeight - stage.offsetHeight,
+    );
+    if (progress === lastProgress) return;
+    lastProgress = progress;
+    for (const token of tokens) {
+      const reveal = reducedMotion.matches ? 1 : clamp((progress - token.start) / 0.075);
+      if (token.symbol) {
+        // Every pose has an exact scroll coordinate, including while reversing.
+        token.element.style.setProperty("--symbol-reveal", reveal.toFixed(4));
+        token.element.style.setProperty("--symbol-progress", (reducedMotion.matches ? 1 : clamp((progress - token.start) / (0.96 - token.start))).toFixed(4));
+      } else {
+        const shade = Math.round(139 + (245 - 139) * reveal);
+        token.element.style.color = `rgb(${shade} ${shade} ${shade})`;
+      }
     }
-    if (nextToken < tokens.length) frame = requestAnimationFrame(advance);
+    position.textContent = String(Math.round(progress * 100)).padStart(2, "0");
   }
-  function syncMotion() {
-    if (frame) cancelAnimationFrame(frame);
-    frame = 0;
-    previousTime = 0;
-    body.classList.toggle("animation-paused", blocked());
-    toggle.setAttribute("aria-pressed", String(userPaused));
-    toggle.setAttribute("aria-label", userPaused ? "继续动画" : "暂停动画");
-    toggle.title = userPaused ? "继续动画" : "暂停动画";
-    if (reducedMotion.matches) {
-      tokens.forEach(token => token.classList.add("is-lit"));
-      nextToken = tokens.length;
-    } else if (!blocked() && nextToken < tokens.length) frame = requestAnimationFrame(advance);
+  function requestScrollUpdate() {
+    // One render per scroll/resize event batch. No self-scheduling animation loop.
+    if (!frame && !document.hidden && !menu.open && !leaving) frame = requestAnimationFrame(updateScroll);
   }
-  function restart() {
-    elapsed = 0;
-    nextToken = 0;
-    userPaused = false;
-    tokens.forEach(token => token.classList.remove("is-lit"));
-    syncMotion();
+  function measureStage() {
+    intro.style.setProperty("--intro-stage-height", `${stage.offsetHeight}px`);
+    lastProgress = -1;
+    requestScrollUpdate();
+  }
+  function setMotionPreference() {
+    body.classList.toggle("scroll-driven", !reducedMotion.matches);
+    measureStage();
+  }
+  function returnToStart() {
+    window.scrollTo({ top: window.scrollY + intro.getBoundingClientRect().top, behavior: "instant" });
+    requestScrollUpdate();
   }
 
-  body.classList.add("motion-ready");
   controls.hidden = false;
   menuTrigger.hidden = false;
-  toggle.addEventListener("click", () => { userPaused = !userPaused; syncMotion(); });
-  replay.addEventListener("click", () => { stage.scrollIntoView({ behavior: reducedMotion.matches ? "instant" : "smooth" }); restart(); });
-  document.addEventListener("visibilitychange", syncMotion);
-  reducedMotion.addEventListener("change", syncMotion);
-
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(entries => {
-      stageVisible = entries[0].isIntersecting;
-      syncMotion();
-    }, { threshold: 0.1 }).observe(stage);
-    const reveals = new IntersectionObserver(entries => {
-      for (const entry of entries) if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        reveals.unobserve(entry.target);
-      }
-    }, { threshold: 0.12 });
-    document.querySelectorAll(".reveal").forEach(element => reveals.observe(element));
-  } else document.querySelectorAll(".reveal").forEach(element => element.classList.add("is-visible"));
+  restart.addEventListener("click", returnToStart);
+  window.addEventListener("scroll", requestScrollUpdate, { passive: true });
+  window.addEventListener("resize", measureStage, { passive: true });
+  // Also handles font-size changes, orientation changes and wrapping on phones.
+  if ("ResizeObserver" in window) new ResizeObserver(measureStage).observe(stage);
+  document.addEventListener("visibilitychange", requestScrollUpdate);
+  reducedMotion.addEventListener("change", setMotionPreference);
+  setMotionPreference();
 
   function closeMenu() {
     if (!menu.open || menu.classList.contains("is-closing")) return;
@@ -111,7 +111,7 @@
     menu.showModal();
     body.classList.add("menu-open");
     menuTrigger.setAttribute("aria-expanded", "true");
-    syncMotion();
+    requestScrollUpdate();
   });
   menu.querySelector(".menu-close").addEventListener("click", closeMenu);
   menu.addEventListener("cancel", event => { event.preventDefault(); closeMenu(); });
@@ -120,7 +120,7 @@
     menu.classList.remove("is-closing");
     menuTrigger.setAttribute("aria-expanded", "false");
     menuTrigger.focus({ preventScroll: true });
-    syncMotion();
+    requestScrollUpdate();
   });
   menu.addEventListener("click", event => {
     if (event.target === menu) {
@@ -132,7 +132,7 @@
     if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     closeMenu();
-    stage.scrollIntoView({ behavior: reducedMotion.matches ? "instant" : "smooth" });
+    returnToStart();
   });
 
   document.addEventListener("click", event => {
@@ -143,7 +143,8 @@
     if (leaving) return;
     leaving = true;
     body.classList.add("page-leaving");
-    syncMotion();
+    if (frame) cancelAnimationFrame(frame);
+    frame = 0;
     navigationTimer = window.setTimeout(() => window.location.assign(link.href), 360);
   });
   // Back/forward cache restores the old DOM, including exit-transition classes.
@@ -151,7 +152,7 @@
     clearTimeout(navigationTimer);
     clearTimeout(closeTimer);
     if (frame) cancelAnimationFrame(frame);
-    navigationTimer = closeTimer = frame = previousTime = 0;
+    navigationTimer = closeTimer = frame = 0;
   }
   window.addEventListener("pagehide", clearPendingWork);
   window.addEventListener("pageshow", event => {
@@ -160,7 +161,8 @@
     leaving = false;
     body.classList.remove("page-leaving");
     if (menu.open) menu.close();
-    syncMotion();
+    measureStage();
   });
-  syncMotion();
+  // Restore the pose after browser-native history/anchor scroll restoration.
+  window.addEventListener("pageshow", measureStage);
 })();
