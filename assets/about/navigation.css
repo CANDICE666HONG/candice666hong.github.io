@@ -1,0 +1,69 @@
+/* The biography now lives at /about/; keep the exported React tree intact. */
+.portfolio .portfolio-content > #about {
+  display: none !important;
+}
+
+/* Animate the scene wrapper rather than the cards updated by the gallery RAF. */
+.about-route-leaving .portfolio .spiral-arrival {
+  animation: about-gallery-depart 400ms cubic-bezier(.55, .05, .45, 1) both !important;
+}
+
+.about-route-leaving .portfolio .gallery-list {
+  animation: about-list-depart 400ms cubic-bezier(.55, .05, .45, 1) both !important;
+}
+
+.about-route-leaving .portfolio .gallery-bottom,
+.about-route-leaving .portfolio .gallery-view-switch,
+.about-route-leaving .portfolio[data-surface="content"] .portfolio-content,
+.about-route-leaving .portfolio[data-surface="content"] > footer,
+.about-route-leaving body > [data-slot="dialog-overlay"] {
+  animation: about-chrome-depart 300ms ease both !important;
+}
+
+.about-route-leaving .navigation-dialog {
+  transform-origin: calc(100% - 28px) 49px;
+  animation: about-menu-depart 400ms cubic-bezier(.55, .05, .45, 1) both !important;
+}
+
+.about-route-leaving .portfolio,
+.about-route-leaving .navigation-dialog {
+  pointer-events: none;
+}
+
+@keyframes about-gallery-depart {
+  from { opacity: 1; transform: translateZ(0) rotateY(0); }
+  to { opacity: 0; transform: translateZ(-1100px) rotateY(24deg) scale(.65); }
+}
+
+@keyframes about-list-depart {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(.76); }
+}
+
+@keyframes about-menu-depart {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(.035); }
+}
+
+@keyframes about-chrome-depart {
+  to { opacity: 0; }
+}
+
+@media (max-width: 700px) {
+  .about-route-leaving .navigation-dialog {
+    transform-origin: calc(100% - 19px) 41px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-route-leaving .portfolio .spiral-arrival,
+  .about-route-leaving .portfolio .gallery-list,
+  .about-route-leaving .portfolio .gallery-bottom,
+  .about-route-leaving .portfolio .gallery-view-switch,
+  .about-route-leaving .portfolio[data-surface="content"] .portfolio-content,
+  .about-route-leaving .portfolio[data-surface="content"] > footer,
+  .about-route-leaving .navigation-dialog,
+  .about-route-leaving body > [data-slot="dialog-overlay"] {
+    animation: none !important;
+  }
+}
