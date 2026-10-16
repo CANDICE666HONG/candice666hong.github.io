@@ -51,12 +51,7 @@ svg { display: block; }
 .scroll-driven .intro-word { color: var(--muted); }
 .inline-symbol { --symbol-progress: 1; --symbol-reveal: 1; display: inline-block; position: relative; width: 1.35em; height: 1.2em; vertical-align: -.2em; margin: 0 .06em; }
 .scroll-driven .inline-symbol { opacity: var(--symbol-reveal); transform: translateY(calc((1 - var(--symbol-reveal)) * 6px)) scale(calc(.75 + var(--symbol-reveal) * .25)); }
-.scroll-cue { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 12px; min-height: 44px; font-size: 12px; color: #9b9b96; white-space: nowrap; transition: color .25s; }
-.scroll-instruction { display: none; }
-.scroll-driven .scroll-instruction { display: inline; }
-.scroll-cue a { display: inline-flex; align-items: center; min-height: 44px; }
-.scroll-cue a:hover { color: var(--white); }
-.scroll-cue svg, .work-link svg, .icon-button svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.work-link svg, .icon-button svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
 .background-section { width: min(1080px, 100% - 112px); margin: 0 auto; padding: 100px 0 126px; }
 .section-heading { border-top: 1px solid #ffffff26; display: flex; justify-content: space-between; padding-top: 24px; gap: 24px; }
 .eyebrow { font: 11px/1.6 "SFMono-Regular", Consolas, monospace; color: #969693; letter-spacing: .06em; }
@@ -121,7 +116,6 @@ body.page-leaving .site-menu { animation: menu-exit .35s ease both; }
   .intro-stage { padding: 120px 26px 140px; }
   .intro-copy { width: 100%; max-width: 470px; }
   .intro-text { font-size: clamp(23px, 5.8vw, 29px); line-height: 1.2; letter-spacing: -.04em; }
-  .scroll-cue { bottom: 100px; font-size: 11px; }
   .background-section { width: calc(100% - 44px); padding: 60px 0 120px; }
   .section-heading { flex-wrap: wrap; gap: 6px 24px; }
   .eyebrow { font-size: 10px; }
@@ -151,7 +145,6 @@ body.page-leaving .site-menu { animation: menu-exit .35s ease both; }
   .intro-stage { padding: 96px 24px 100px; }
   .intro-copy { width: min(720px, 90vw); max-width: none; }
   .intro-text { font-size: clamp(18px, 2.9vw, 23px); line-height: 1.12; }
-  .scroll-cue { bottom: 24px; }
   .site-menu nav { margin: 20px 0; }
   .site-menu nav a { padding: 12px 0; }
 }
@@ -162,5 +155,5 @@ body.page-leaving .site-menu { animation: menu-exit .35s ease both; }
   .scroll-driven .intro-scroll { height: auto; }
   .scroll-driven .intro-stage { position: relative; }
   .scroll-driven .inline-symbol { opacity: 1; transform: none; }
-  .scroll-controls, .scroll-instruction { display: none !important; }
+  .scroll-controls { display: none !important; }
 }
