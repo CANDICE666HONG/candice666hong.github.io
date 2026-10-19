@@ -25,7 +25,8 @@ Do not hand-edit the generated HTML or `_next/` files.
 
 The homepage and About page share `assets/i18n/locale.js` and `language.css`.
 Preference order is the URL's `?lang=zh` / `?lang=en`, the saved choice, then
-the browser language. A visitor's selection is saved in local storage and
+English. A first visit starts in English regardless of browser language.
+A visitor's selection is saved in local storage and
 carried into cross-page links, including when storage is unavailable. Changing
 language preserves the current section, open project, and About scroll progress.
 

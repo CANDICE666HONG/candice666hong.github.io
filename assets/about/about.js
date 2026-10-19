@@ -1,4 +1,4 @@
-import { getLocale, setLocale, subscribe, localizeUrl, initializeLocale } from "/assets/i18n/locale.js";
+import { getLocale, setLocale, subscribe, localizeUrl, initializeLocale } from "/assets/i18n/locale.js?v=20261019-default-en";
 
 /* The introduction is scrubbed by native scroll position, never by a clock. */
 (() => {

@@ -13,7 +13,7 @@ function preferredLocale() {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (valid(saved)) return saved;
   } catch { /* Private browsing may disallow persistent storage. */ }
-  return /^zh\b/i.test(navigator.language || "") ? "zh" : "en";
+  return "en";
 }
 function applyDocumentLocale() {
   document.documentElement.lang = current === "zh" ? "zh-CN" : "en";

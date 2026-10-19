@@ -26,8 +26,10 @@ async function scenario({ url = 'https://candicehong.cn/#contact', saved = null,
 }
 
 let test = await scenario({ language: 'zh-CN' });
+assert.equal(test.api.getLocale(), 'en');
+assert.equal(document.documentElement.lang, 'en');
+test = await scenario({ url: 'https://candicehong.cn/?lang=zh#contact' });
 assert.equal(test.api.getLocale(), 'zh');
-assert.equal(document.documentElement.lang, 'zh-CN');
 test = await scenario({ saved: 'zh', language: 'en' });
 assert.equal(test.api.getLocale(), 'zh');
 test = await scenario({ url: 'https://candicehong.cn/?lang=en#contact', saved: 'zh' });
@@ -55,7 +57,7 @@ test.win.location = new URL('https://candicehong.cn/?lang=en#work');
 test.events.get('popstate')();
 assert.equal(test.api.getLocale(), 'en');
 test = await scenario({ language: 'zh-TW', blocked: true });
-assert.equal(test.api.getLocale(), 'zh');
+assert.equal(test.api.getLocale(), 'en');
 test.api.setLocale('en');
 assert.equal(test.api.getLocale(), 'en');
 assert.equal(test.api.localizeUrl('/about/'), '/about/?lang=en');
