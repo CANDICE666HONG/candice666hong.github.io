@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpRight, ArrowUp, Plus, X } from "lucide-react";
+import { ArrowUpRight, ArrowUp, Plus, Volume2, VolumeX, X } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose, DialogTrigger } from "@/components/ui/dialog";
 import { IntroOrb, PortfolioExperience, RollingText, useInterfaceAudio, type EntryPhase } from "@/components/portfolio-experience";
 import { SpiralGallery, type GalleryMode } from "@/components/spiral-gallery";
@@ -14,6 +14,11 @@ function SectionLabel({ index, children }: { index: string; children: React.Reac
 }
 function ordinaryClick(event: React.MouseEvent<HTMLAnchorElement>) {
   return event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
+}
+function SoundToggle({ soundOn, onToggle, className = "" }: { soundOn: boolean; onToggle: () => void; className?: string }) {
+  const { t } = useLocale();
+  const label = t(soundOn ? "关闭音效" : "开启音效");
+  return <button type="button" className={`sound-toggle ${className}`} data-sound="none" aria-label={label} title={label} aria-pressed={soundOn} onClick={onToggle}>{soundOn ? <Volume2 size={17} aria-hidden="true" /> : <VolumeX size={17} aria-hidden="true" />}</button>;
 }
 
 export default function Home() {
@@ -115,22 +120,23 @@ export default function Home() {
     <PortfolioExperience phase={entryPhase} onPhaseChange={setEntryPhase} onSound={setSound} />
     <a className="skip-link" href="#work" onClick={event => { event.preventDefault(); showSection("work"); }}>{t("跳转到作品")}</a>
     <header className="site-header">
-      <a className="wordmark" href="#gallery" onClick={event => { event.preventDefault(); showGallery(); }} aria-label={t("Candice Hong 作品首页")}><IntroOrb /><span className="wordmark-caption">{locale === "zh" ? "洪宇欣" : "candice hong."}</span></a>
-      <nav className="gallery-view-switch" aria-label={t("作品展示方式")}><button aria-pressed={surface === "gallery" && galleryMode === "spiral"} onClick={() => showGallery("spiral")}>{t("spiral")}</button><span className="gallery-view-dot" aria-hidden="true" /><button aria-pressed={surface === "gallery" && galleryMode === "list"} onClick={() => showGallery("list")}>{t("list")}</button></nav>
+      <a className="wordmark" data-sound="click" href="#gallery" onClick={event => { event.preventDefault(); showGallery(); }} aria-label={t("Candice Hong 作品首页")}><IntroOrb /><span className="wordmark-caption">{locale === "zh" ? "洪宇欣" : "candice hong."}</span></a>
+      <nav className="gallery-view-switch" aria-label={t("作品展示方式")}><button data-sound="click" aria-pressed={surface === "gallery" && galleryMode === "spiral"} onClick={() => showGallery("spiral")}>{t("spiral")}</button><span className="gallery-view-dot" aria-hidden="true" /><button data-sound="click" aria-pressed={surface === "gallery" && galleryMode === "list"} onClick={() => showGallery("list")}>{t("list")}</button></nav>
       <div className="header-actions">
+        {surface === "content" && <SoundToggle className="header-sound" soundOn={soundOn} onToggle={() => void setSound(!soundOn)} />}
         <LanguageSwitch />
         <Dialog open={menuOpen} onOpenChange={setMenuOpen}>
-          <DialogTrigger asChild><button className="menu-button" data-magnetic><RollingText>{t("menu")}</RollingText> <Plus size={17} aria-hidden="true" /></button></DialogTrigger>
+          <DialogTrigger asChild><button className="menu-button" data-sound="open" data-magnetic><RollingText>{t("menu")}</RollingText> <Plus size={17} aria-hidden="true" /></button></DialogTrigger>
           <DialogContent className="navigation-dialog" showCloseButton={false} onCloseAutoFocus={event => { const id = navTarget.current; if (id) { event.preventDefault(); navTarget.current = null; showSection(id); } }}>
-            <div className="menu-top"><span className="wordmark">{locale === "zh" ? "洪宇欣" : "candice hong."}</span><div className="dialog-actions"><LanguageSwitch /><DialogClose asChild><button className="menu-button" data-magnetic><RollingText>{t("close")}</RollingText> <X size={16} aria-hidden="true" /></button></DialogClose></div></div>
+            <div className="menu-top"><span className="wordmark">{locale === "zh" ? "洪宇欣" : "candice hong."}</span><div className="dialog-actions"><SoundToggle soundOn={soundOn} onToggle={() => void setSound(!soundOn)} /><LanguageSwitch /><DialogClose asChild><button className="menu-button" data-sound="close" data-magnetic><RollingText>{t("close")}</RollingText> <X size={16} aria-hidden="true" /></button></DialogClose></div></div>
             <DialogTitle className="sr-only">{t("网站导航")}</DialogTitle><DialogDescription className="sr-only">{t("跳转至个人简介、精选作品、技能专长或联系方式。")}</DialogDescription>
-            <nav className="menu-links" aria-label={t("主导航")}>{[["about", "About"], ["work", "Work"], ["skills", "Expertise"], ["contact", "Contact"]].map(([id, label], index) => <a href={id === "about" ? aboutHref : `#${id}`} key={id} onClick={event => {
+            <nav className="menu-links" aria-label={t("主导航")}>{[["about", "About"], ["work", "Work"], ["skills", "Expertise"], ["contact", "Contact"]].map(([id, label], index) => <a href={id === "about" ? aboutHref : `#${id}`} key={id} data-sound="open" onClick={event => {
               if (!ordinaryClick(event)) return;
               event.preventDefault();
               if (id === "about") showAbout();
               else { navTarget.current = id; setMenuOpen(false); }
             }}><span className="mono">0{index + 1}</span><span>{t(label)}</span><ArrowUpRight aria-hidden="true" /></a>)}</nav>
-            <a className="menu-email" href="mailto:yhong423@connect.hkust-gz.edu.cn">yhong423@connect.hkust-gz.edu.cn <ArrowUpRight size={18} /></a>
+            <a className="menu-email" data-sound="open" href="mailto:yhong423@connect.hkust-gz.edu.cn">yhong423@connect.hkust-gz.edu.cn <ArrowUpRight size={18} /></a>
           </DialogContent>
         </Dialog>
       </div>
@@ -140,23 +146,23 @@ export default function Home() {
       <div className="portfolio-content" hidden={surface !== "content"}>
         <section id="work" className="work-section section-shell">
           <div className="section-heading reveal"><div><SectionLabel index="02">{t("SELECTED WORK / 精选作品")}</SectionLabel><h1 className="work-heading">{t("A few things")}<br />{t("I’ve put my ")}<em>{t("mind")}</em>{t(" into.")}</h1></div><span className="project-count mono">{t("INDEX — 01/04")}</span></div>
-          <div className="project-grid">{projects.map(project => <button key={project.id} className={`project-card project-${project.id} reveal`} onClick={() => setActiveId(project.id)} aria-label={t("查看 {title} 项目详情", { title: project.title })}><div className="project-image"><img src={`/images/${project.image}`} alt={project.alt} loading="lazy" width="1200" height="960" /><span className="image-index mono">({project.number})</span><span className="view-project">{t("View project")} <ArrowUpRight size={18} /></span></div><div className="project-meta"><div><span className="project-category mono">{project.category}</span><h3>{project.title}</h3><p>{project.summary}</p></div><span className="project-arrow"><ArrowUpRight size={25} strokeWidth={1.3} /></span></div></button>)}</div>
+          <div className="project-grid">{projects.map(project => <button key={project.id} className={`project-card project-${project.id} reveal`} data-sound="open" onClick={() => setActiveId(project.id)} aria-label={t("查看 {title} 项目详情", { title: project.title })}><div className="project-image"><img src={`/images/${project.image}`} alt={project.alt} loading="lazy" width="1200" height="960" /><span className="image-index mono">({project.number})</span><span className="view-project">{t("View project")} <ArrowUpRight size={18} /></span></div><div className="project-meta"><div><span className="project-category mono">{project.category}</span><h3>{project.title}</h3><p>{project.summary}</p></div><span className="project-arrow"><ArrowUpRight size={25} strokeWidth={1.3} /></span></div></button>)}</div>
         </section>
         <section id="skills" className="skills-section section-shell">
           <div className="section-heading reveal"><div><SectionLabel index="03">{t("EXPERTISE / 技能专长")}</SectionLabel><h2>{t("Different tools.")}<br /><span className="muted-line">{t("One curious mind.")}</span></h2></div><p className="skills-note">{t("从理解问题，到原型与表达。")}<br />{t("让每一种工具，为体验服务。")}</p></div>
           <div className="skill-list">{skillData.map(skill => <div className="skill-row reveal" key={skill.n}><span className="skill-number mono">{skill.n}</span><div><h3>{t(skill.title)}</h3></div><p>{t(skill.items)}</p><Plus className="skill-plus" size={20} strokeWidth={1.2} aria-hidden="true" /></div>)}</div>
         </section>
-        <section id="contact" className="contact-section"><div className="contact-inner"><SectionLabel index="04">{t("SAY HELLO / 联系我")}</SectionLabel><a className="contact-title" href="mailto:yhong423@connect.hkust-gz.edu.cn">{t("Let’s make")}<br />{t("something ")}<em>{t("matter.")}</em><ArrowUpRight className="contact-arrow" strokeWidth={1} aria-hidden="true" /></a><div className="contact-bottom"><p>{t("关于设计、创作，或一个有趣的想法。")}<br />{t("期待和你聊聊。")}</p><div className="contact-details"><a href="mailto:yhong423@connect.hkust-gz.edu.cn" className="email-link">yhong423@connect.hkust-gz.edu.cn<ArrowUpRight size={20} /></a><div className="contact-actions"><a href="tel:+8613144539696">+86 131 4453 9696</a><button onClick={copyEmail} aria-live="polite">{t(copyMessage)}</button></div></div></div></div></section>
+        <section id="contact" className="contact-section"><div className="contact-inner"><SectionLabel index="04">{t("SAY HELLO / 联系我")}</SectionLabel><a className="contact-title" data-sound="open" href="mailto:yhong423@connect.hkust-gz.edu.cn">{t("Let’s make")}<br />{t("something ")}<em>{t("matter.")}</em><ArrowUpRight className="contact-arrow" strokeWidth={1} aria-hidden="true" /></a><div className="contact-bottom"><p>{t("关于设计、创作，或一个有趣的想法。")}<br />{t("期待和你聊聊。")}</p><div className="contact-details"><a href="mailto:yhong423@connect.hkust-gz.edu.cn" className="email-link" data-sound="open">yhong423@connect.hkust-gz.edu.cn<ArrowUpRight size={20} /></a><div className="contact-actions"><a href="tel:+8613144539696" data-sound="open">+86 131 4453 9696</a><button onClick={copyEmail} aria-live="polite">{t(copyMessage)}</button></div></div></div></div></section>
       </div>
     </main>
     <footer hidden={surface !== "content"}><span>© {new Date().getFullYear()} {locale === "zh" ? "洪宇欣" : "Candice (Yuxin) Hong"}</span><span className="footer-note">{t("MADE WITH CURIOSITY.")}</span><a href="#work" onClick={event => { event.preventDefault(); showSection("work"); }}>{t("Back to top")} <ArrowUp size={14} /></a></footer>
     <Dialog open={active !== null} onOpenChange={open => { if (!open) setActiveId(null); }}><DialogContent className="project-dialog" showCloseButton={false}>{active && <>
-      <div className="project-dialog-top"><span className="mono">{locale === "zh" ? "项目" : "PROJECT"} {active.number} / 04</span><div className="dialog-actions"><LanguageSwitch /><DialogClose asChild><button className="menu-button">{t("close")} <X size={17} aria-hidden="true" /></button></DialogClose></div></div>
+      <div className="project-dialog-top"><span className="mono">{locale === "zh" ? "项目" : "PROJECT"} {active.number} / 04</span><div className="dialog-actions"><SoundToggle soundOn={soundOn} onToggle={() => void setSound(!soundOn)} /><LanguageSwitch /><DialogClose asChild><button className="menu-button" data-sound="close">{t("close")} <X size={17} aria-hidden="true" /></button></DialogClose></div></div>
       <div className="case-heading"><span className="project-category mono">{active.category}</span><DialogTitle className="case-title">{active.title}</DialogTitle><DialogDescription className="case-description">{active.description}</DialogDescription><p className="case-type">{active.type}</p></div>
       <img className={`case-cover cover-${active.id}`} src={`/images/${active.image}`} alt={active.alt} />
       <div className="case-content"><div><h3>{t("Focus / 设计议题")}</h3><p>{active.focus}</p></div><div><h3>{t("Process / 研究与探索")}</h3><p>{active.approach}</p></div><div><h3>{t("Outcome / 设计产出")}</h3><p>{active.outcome}</p></div><div><h3>{t("Methods / 方法与工具")}</h3><p>{active.tools}</p></div></div>
       <div className="case-pages"><span className="mono case-page-label">{t("FROM THE PORTFOLIO / 项目过程")}</span>{active.pages.map(page => <img key={page} src={`/images/${active.id}-page-${page}.webp`} alt={locale === "zh" ? `${active.title} 原始作品集项目过程，第 ${page} 页` : `${active.title} original portfolio process, page ${page}`} loading="lazy" width="2024" height="716" />)}</div>
-      <DialogClose asChild><button className="case-back">{t("返回精选作品")} <ArrowUpRight size={18} /></button></DialogClose>
+      <DialogClose asChild><button className="case-back" data-sound="close">{t("返回精选作品")} <ArrowUpRight size={18} /></button></DialogClose>
     </>}</DialogContent></Dialog>
   </div>;
 }

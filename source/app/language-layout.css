@@ -249,3 +249,53 @@ html:lang(zh) .entry-title {
     right: calc(6% + 120px);
   }
 }
+
+/* The same audio control remains reachable on content and within modal dialogs. */
+.site-header .header-sound,
+.dialog-actions .sound-toggle {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: #0a0a0ae8;
+  color: #c4c4bf;
+  border: 1px solid #ffffff35;
+}
+.site-header .header-sound[aria-pressed="true"],
+.dialog-actions .sound-toggle[aria-pressed="true"] {
+  color: var(--primary);
+  border-color: #bcf77b80;
+}
+.site-header .header-sound:hover,
+.dialog-actions .sound-toggle:hover {
+  color: #0a0a0a;
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.gallery-controls .gallery-sound {
+  width: 44px;
+  height: 44px;
+}
+@media (max-width: 700px) {
+  .site-header .header-sound {
+    position: fixed;
+    right: 18px;
+    bottom: max(20px, env(safe-area-inset-bottom));
+    box-shadow: 0 4px 22px #0005;
+  }
+  .portfolio[data-surface="content"] > footer {
+    padding-bottom: max(84px, calc(env(safe-area-inset-bottom) + 64px));
+  }
+}
+@media (max-width: 420px) {
+  .project-dialog-top {
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+  .project-dialog-top > .mono {
+    flex-basis: 100%;
+  }
+  .project-dialog-top .dialog-actions {
+    margin-left: auto;
+  }
+}

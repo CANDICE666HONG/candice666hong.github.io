@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from "react";
 import { Asterisk, ArrowUpRight, Volume2 } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { LanguageSwitch } from "@/components/language-switch";
 import { useLocale } from "@/lib/i18n";
+import { getSoundEnabled, mountInterfaceAudio, setSoundEnabled, subscribeSound } from "../../assets/audio/interface-audio.js";
 
 export type EntryPhase = "prelude" | "intro" | "transition" | "complete";
 // The uploaded reference switches from the geometric greeting to its orb at about 1.9 s.
@@ -17,45 +18,9 @@ export function RollingText({ children }: { children: string }) {
 }
 
 export function useInterfaceAudio() {
-  const [soundOn, setSoundOn] = useState(false);
-  const context = useRef<AudioContext | null>(null);
-  const enabled = useRef(false);
-  const play = useCallback((entry = false) => {
-    const audio = context.current;
-    if (!audio || !enabled.current || audio.state !== "running") return;
-    const frequencies = entry ? [261.63, 392, 523.25] : [740];
-    frequencies.forEach((frequency, index) => {
-      const oscillator = audio.createOscillator();
-      const gain = audio.createGain();
-      const start = audio.currentTime + index * 0.1;
-      const duration = entry ? 1.05 : 0.075;
-      oscillator.type = "sine";
-      oscillator.frequency.setValueAtTime(frequency, start);
-      gain.gain.setValueAtTime(0, start);
-      gain.gain.linearRampToValueAtTime(entry ? 0.045 : 0.025, start + 0.012);
-      gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-      oscillator.connect(gain);
-      gain.connect(audio.destination);
-      oscillator.start(start);
-      oscillator.stop(start + duration);
-      oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
-    });
-  }, []);
-  const setSound = useCallback(async (on: boolean, entry = false) => {
-    enabled.current = on;
-    if (!on) { setSoundOn(false); void context.current?.suspend().catch(() => {}); return; }
-    try {
-      context.current ??= new AudioContext();
-      await context.current.resume();
-      setSoundOn(enabled.current);
-      if (enabled.current) play(entry);
-    } catch { enabled.current = false; setSoundOn(false); }
-  }, [play]);
-  useEffect(() => {
-    const click = (event: MouseEvent) => { if ((event.target as Element).closest("a,button")) play(); };
-    document.addEventListener("click", click);
-    return () => { document.removeEventListener("click", click); void context.current?.close().catch(() => {}); context.current = null; };
-  }, [play]);
+  const soundOn = useSyncExternalStore(subscribeSound, getSoundEnabled, () => false);
+  const setSound = useCallback((on: boolean, entry = false) => setSoundEnabled(on, entry ? "enter" : "click"), []);
+  useEffect(() => mountInterfaceAudio(), []);
   return { soundOn, setSound };
 }
 
@@ -136,6 +101,7 @@ export function PortfolioExperience({ phase, onPhaseChange, onSound }: { phase: 
     return () => { if (timer.current) clearTimeout(timer.current); };
   }, [onPhaseChange]);
   const finish = () => { if (timer.current) clearTimeout(timer.current); onPhaseChange("complete"); };
+  const skip = () => { void onSound(false); finish(); };
   const enter = (withSound: boolean) => {
     if (phase !== "intro") return;
     void onSound(withSound, true);
@@ -144,7 +110,7 @@ export function PortfolioExperience({ phase, onPhaseChange, onSound }: { phase: 
   };
   return <>
     {!hydrated && <div className="entry-preload" aria-hidden="true" />}
-    {hydrated && <Dialog open={phase !== "complete"} onOpenChange={open => { if (!open) finish(); }}>
+    {hydrated && <Dialog open={phase !== "complete"} onOpenChange={open => { if (!open) skip(); }}>
       {/* Reset the primitive's axis utilities: production CSS may fold translate:none into transform:none. */}
       <DialogContent className="entry-dialog top-0 left-0 translate-x-0 translate-y-0" data-phase={phase} showCloseButton={false}
         onInteractOutside={event => event.preventDefault()}
@@ -152,15 +118,15 @@ export function PortfolioExperience({ phase, onPhaseChange, onSound }: { phase: 
         onCloseAutoFocus={event => { event.preventDefault(); if (!window.location.hash) document.querySelector<HTMLElement>(".gallery-title")?.focus({ preventScroll: true }); }}>
         <div className="entry-curtain" aria-hidden="true" />
         <div className="entry-corner entry-name">candice hong.</div>
-        <div className="entry-language"><LanguageSwitch /></div>
-        <button className="entry-skip" onClick={finish}>{t("skip intro")} <ArrowUpRight size={14} /></button>
+        <div className="entry-language" data-sound="none"><LanguageSwitch /></div>
+        <button className="entry-skip" data-sound="none" onClick={skip}>{t("skip intro")} <ArrowUpRight size={14} /></button>
         <div className="entry-center">
           <div className="entry-artwork">{phase === "prelude" ? <GreetingPrelude /> : <div className="entry-orb-arrival"><IntroOrb /></div>}</div>
           <DialogTitle className="entry-title">{t("interaction & visual designer")}<br />{t("based in guangzhou")}</DialogTitle>
           <DialogDescription className="sr-only">{t("洪宇欣的个人作品集。简短问候动画后可选择有声或静音进入，按 Escape 可跳过开屏。")}</DialogDescription>
-          <button id="enter-with-sound" className="entry-button" data-magnetic disabled={phase !== "intro"} onClick={() => enter(true)}><RollingText>{t("enter with sound")}</RollingText><Volume2 size={14} /></button>
+          <button id="enter-with-sound" className="entry-button" data-sound="none" data-magnetic disabled={phase !== "intro"} onClick={() => enter(true)}><RollingText>{t("enter with sound")}</RollingText><Volume2 size={14} /></button>
         </div>
-        <button className="entry-silent" disabled={phase !== "intro"} onClick={() => enter(false)}><RollingText>{t("enter without sound")}</RollingText></button>
+        <button className="entry-silent" data-sound="none" disabled={phase !== "intro"} onClick={() => enter(false)}><RollingText>{t("enter without sound")}</RollingText></button>
       </DialogContent>
     </Dialog>}
     {phase === "complete" && <PointerEffects />}

@@ -9,16 +9,16 @@
   <link rel="canonical" href="https://candicehong.cn/about/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/i18n/language.css?v=20261017-language">
-  <link rel="stylesheet" href="/assets/about/about.css?v=20261019-cv">
+  <link rel="stylesheet" href="/assets/about/about.css?v=20261019-sound">
   <link rel="stylesheet" href="/assets/about/symbols.css?v=20261016-scroll">
-  <script type="module" src="/assets/about/about.js?v=20261019-default-en"></script>
+  <script type="module" src="/assets/about/about.js?v=20261019-sound"></script>
 </head>
 <body>
   <a class="skip-link" href="#introduction" data-i18n="skip">Skip to introduction</a>
   <div class="stage-grid" aria-hidden="true"></div>
 
   <header class="about-header">
-    <a class="brand" href="/#gallery" aria-label="Candice Hong · Back to selected work" data-i18n-aria="brandLabel" data-page-link>
+    <a class="brand" href="/#gallery" aria-label="Candice Hong · Back to selected work" data-i18n-aria="brandLabel" data-page-link data-sound="open">
       <span class="brand-orb" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 6v12m5.196-9L6.804 15m0-6 10.392 6"/></svg></span>
       <span class="brand-caption" data-i18n="brand">candice hong.</span>
     </a>
@@ -27,7 +27,7 @@
         <button type="button" lang="zh-CN" data-language="zh" aria-pressed="false">中文</button>
         <button type="button" lang="en" data-language="en" aria-pressed="true">EN</button>
       </div>
-    <button class="pill menu-trigger" type="button" aria-haspopup="dialog" aria-controls="site-menu" aria-expanded="false" hidden>
+    <button class="pill menu-trigger" type="button" data-sound="open" aria-haspopup="dialog" aria-controls="site-menu" aria-expanded="false" hidden>
       <span class="roll-label"><span data-i18n="menu">menu</span><span aria-hidden="true" data-i18n="menu">menu</span></span><span aria-hidden="true">+</span>
     </button>
     <noscript><a class="pill" href="/#gallery">work ↗</a></noscript>
@@ -151,16 +151,19 @@
         </article>
         <div class="volunteer-note"><h3 data-i18n="volunteerHeading">Campus volunteering</h3><p data-i18n="volunteerCopy">Supported Red Bird new-student activities with check-in, welcome gift distribution and explanations of event procedures. Volunteered at the Red Bird campus fair, helping staff coordinate activities and maintain an orderly event.</p></div>
       </section>
-      <div class="about-links reveal"><a href="/#skills" data-page-link><span data-i18n="expertiseLink">Explore my expertise</span> <span aria-hidden="true">↗</span></a><a href="mailto:yhong423@connect.hkust-gz.edu.cn"><span data-i18n="contactLink">Let’s talk</span> <span aria-hidden="true">↗</span></a></div>
+      <div class="about-links reveal"><a href="/#skills" data-page-link data-sound="open"><span data-i18n="expertiseLink">Explore my expertise</span> <span aria-hidden="true">↗</span></a><a href="mailto:yhong423@connect.hkust-gz.edu.cn"><span data-i18n="contactLink">Let’s talk</span> <span aria-hidden="true">↗</span></a></div>
       <footer class="about-footer"><span data-i18n="copyright">© Candice (Yuxin) Hong</span><span data-i18n="footerNote">MADE WITH CURIOSITY.</span></footer>
     </section>
   </main>
 
   <div class="about-dock">
-    <a class="work-link" href="/#gallery" data-page-link><span class="work-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span data-i18n="workLink">selected work</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>
+    <a class="work-link" href="/#gallery" data-page-link data-sound="open"><span class="work-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span data-i18n="workLink">selected work</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>
+    <div class="dock-actions">
     <div class="scroll-controls" hidden>
       <span class="scroll-progress" aria-hidden="true"><span id="scroll-position">00</span><span>/100</span></span>
-      <button class="icon-button" id="intro-start" type="button" aria-label="Back to the start of the introduction" title="Back to the start" data-i18n-aria="restartLabel" data-i18n-title="restartTitle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6M5 3h14"/></svg></button>
+      <button class="icon-button" id="intro-start" type="button" data-sound="click" aria-label="Back to the start of the introduction" title="Back to the start" data-i18n-aria="restartLabel" data-i18n-title="restartTitle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6M5 3h14"/></svg></button>
+    </div>
+    <button class="icon-button sound-toggle" type="button" data-sound-toggle data-sound="none" aria-pressed="false" aria-label="Turn sound on" title="Turn sound on" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><g class="sound-waves"><path d="M16 9a5 5 0 0 1 0 6m3-9a9 9 0 0 1 0 12"/></g><path class="sound-mute" d="m4 3 17 18"/></svg></button>
     </div>
   </div>
 
@@ -168,12 +171,12 @@
     <div class="menu-top"><h2 id="menu-title" data-i18n="brand">candice hong.</h2><div class="language-switch" role="group" aria-label="Interface language" data-i18n-aria="languageLabel" hidden>
         <button type="button" lang="zh-CN" data-language="zh" aria-pressed="false">中文</button>
         <button type="button" lang="en" data-language="en" aria-pressed="true">EN</button>
-      </div><button class="pill menu-close" type="button"><span data-i18n="close">close</span> <span aria-hidden="true">×</span></button></div>
+      </div><button class="icon-button sound-toggle menu-sound" type="button" data-sound-toggle data-sound="none" aria-pressed="false" aria-label="Turn sound on" title="Turn sound on" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><g class="sound-waves"><path d="M16 9a5 5 0 0 1 0 6m3-9a9 9 0 0 1 0 12"/></g><path class="sound-mute" d="m4 3 17 18"/></svg></button><button class="pill menu-close" type="button" data-sound="close"><span data-i18n="close">close</span> <span aria-hidden="true">×</span></button></div>
     <nav aria-label="Main navigation" data-i18n-aria="navigation">
-      <a href="/about/" aria-current="page"><span class="menu-number">01</span><span data-i18n="navAbout">About</span><span class="menu-arrow" aria-hidden="true">↗</span></a>
-      <a href="/#gallery" data-page-link><span class="menu-number">02</span><span data-i18n="navWork">Work</span><span class="menu-arrow" aria-hidden="true">↗</span></a>
-      <a href="/#skills" data-page-link><span class="menu-number">03</span><span data-i18n="navExpertise">Expertise</span><span class="menu-arrow" aria-hidden="true">↗</span></a>
-      <a href="/#contact" data-page-link><span class="menu-number">04</span><span data-i18n="navContact">Contact</span><span class="menu-arrow" aria-hidden="true">↗</span></a>
+      <a href="/about/" aria-current="page" data-sound="close"><span class="menu-number">01</span><span data-i18n="navAbout">About</span><span class="menu-arrow" aria-hidden="true">↗</span></a>
+      <a href="/#gallery" data-page-link data-sound="open"><span class="menu-number">02</span><span data-i18n="navWork">Work</span><span class="menu-arrow" aria-hidden="true">↗</span></a>
+      <a href="/#skills" data-page-link data-sound="open"><span class="menu-number">03</span><span data-i18n="navExpertise">Expertise</span><span class="menu-arrow" aria-hidden="true">↗</span></a>
+      <a href="/#contact" data-page-link data-sound="open"><span class="menu-number">04</span><span data-i18n="navContact">Contact</span><span class="menu-arrow" aria-hidden="true">↗</span></a>
     </nav>
     <a class="menu-email" href="mailto:yhong423@connect.hkust-gz.edu.cn">yhong423@connect.hkust-gz.edu.cn <span aria-hidden="true">↗</span></a>
   </dialog>

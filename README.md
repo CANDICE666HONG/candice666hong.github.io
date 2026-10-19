@@ -34,6 +34,32 @@ Project names, software names, and original portfolio images are retained.
 Translate interface prose in the catalog; About copy is in `assets/about/about.js`.
 Run `node scripts/check-locale.mjs` to verify preference, URL, and storage behavior.
 
+## Interface sounds
+
+`assets/audio/sound-design.js` synthesizes six original sounds: a soft glass
+click, opening and closing cues, a warm entry chord, and directional air swipes.
+The homepage and About page share `assets/audio/interface-audio.js`; it builds
+short Web Audio buffers once after a user gesture, with no audio downloads or
+external service. The 1.08-second entry chord fits the existing 1.15-second
+transition. Sounds never change the animation timing.
+
+Sound defaults to off. “Enter with sound” and the speaker buttons enable it;
+silent entry, Skip and Escape silence the intro. The `candice-sound` preference
+is shared between pages, but each new document still needs a user gesture to
+unlock audio. Muting stops active sounds immediately. Hidden tabs and page exits
+clear voices, and automatic gallery rotation and programmatic scrolling stay
+silent. User scroll sounds share a 220ms limit and a four-voice maximum.
+
+Controls can opt into `data-sound="click"`, `"open"`, or `"close"`; use
+`data-sound="none"` for controls with their own sound handling. Keep sound
+toggles accessible inside dialogs as well as on the page.
+
+Run `node scripts/check-audio.mjs` to verify gesture, mute, lifecycle, scroll,
+and browser-fallback behavior. `node scripts/render-sounds.mjs` regenerates the
+WAV previews in `assets/audio/previews/`. `interface-sounds.wav` plays click,
+open, close, enter, forward swipe and backward swipe in that order. These files
+are for auditioning and are not downloaded during ordinary site browsing.
+
 ## Independent About page
 
 - `about/index.html`: introduction, education, internship and community experience, and page navigation.

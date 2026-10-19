@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { ArrowDown, ArrowUpRight, Pause, Play, Volume2, VolumeX } from "lucide-react";
 import { useLocale } from "@/lib/i18n";
+import { playSound } from "../../assets/audio/interface-audio.js";
 
 export type GalleryMode = "spiral" | "list";
 export type GalleryProject = { id: string; number: string; title: string; image: string; alt: string; category: string; description: string; summary?: string };
@@ -90,6 +91,7 @@ export function SpiralGallery({ projects, mode, enabled, paused, soundOn, onSoun
       event.preventDefault();
       const delta = (event.deltaY + event.deltaX) * (event.deltaMode === 1 ? 16 : 1);
       velocity = Math.max(-5, Math.min(5, velocity + delta * 0.007));
+      if (delta) playSound("swipe", { direction: Math.sign(delta), intensity: Math.min(1, Math.abs(delta) / 120) });
       wake();
     };
     const down = (event: PointerEvent) => {
@@ -107,9 +109,11 @@ export function SpiralGallery({ projects, mode, enabled, paused, soundOn, onSoun
         setHovered(null);
       }
       if (wasDragged.current) {
-        const change = (event.clientX - drag.x - (event.clientY - drag.y) * 0.7) * 0.005;
+        const delta = event.clientX - drag.x - (event.clientY - drag.y) * 0.7;
+        const change = delta * 0.005;
         angle.current += change;
         velocity = Math.max(-3, Math.min(3, change * 20));
+        if (change) playSound("swipe", { direction: Math.sign(change), intensity: Math.min(1, Math.abs(delta) / 120) });
         render();
       }
       drag.x = event.clientX; drag.y = event.clientY;
@@ -163,26 +167,26 @@ export function SpiralGallery({ projects, mode, enabled, paused, soundOn, onSoun
       <div className="spiral-arrival"><div className="spiral-axis" ref={axis}>
         {Array.from({ length: projects.length * COPIES }, (_, index) => {
           const project = projects[index % projects.length];
-          return <button className={`spiral-card spiral-${project.id}`} key={index} data-project={project.id}
-            tabIndex={-1} aria-hidden="true" aria-label={t("查看 {title} 项目详情", { title: project.title })} onClick={() => { if (!wasDragged.current) onOpen(project.id); }}>
+          return <button className={`spiral-card spiral-${project.id}`} key={index} data-project={project.id} data-sound="none"
+            tabIndex={-1} aria-hidden="true" aria-label={t("查看 {title} 项目详情", { title: project.title })} onClick={() => { if (!wasDragged.current) { playSound("open"); onOpen(project.id); } }}>
             <CurvedCover project={project} />
           </button>;
         })}
       </div></div>
-      <div className="gallery-keyboard-projects">{projects.map(project => <button key={project.id} onClick={() => onOpen(project.id)}>{t("查看 {title} 项目详情", { title: project.title })}</button>)}</div>
+      <div className="gallery-keyboard-projects">{projects.map(project => <button key={project.id} data-sound="open" onClick={() => onOpen(project.id)}>{t("查看 {title} 项目详情", { title: project.title })}</button>)}</div>
       <div className="gallery-hover-label" data-visible={!!hovered}>{hovered?.title}<ArrowUpRight size={14} /></div>
-    </div> : <div className="gallery-list">{projects.map(project => <button className="gallery-list-item" key={project.id} onClick={() => onOpen(project.id)}>
+    </div> : <div className="gallery-list">{projects.map(project => <button className="gallery-list-item" key={project.id} data-sound="open" onClick={() => onOpen(project.id)}>
       <span className="gallery-list-number">{project.number}</span><img src={`/images/${project.image}`} alt={project.alt} />
       <span className="gallery-list-copy"><span className="gallery-list-category">{project.category}</span><span className="gallery-list-name">{project.title}</span><span className="gallery-list-description">{project.summary ?? project.description}</span></span><ArrowUpRight className="gallery-list-arrow" strokeWidth={1.2} />
     </button>)}</div>}
     <div className="gallery-bottom">
-      <button className="gallery-about" onClick={onAbout} aria-label={t("About me · Candice Hong")}>
+      <button className="gallery-about" data-sound="open" onClick={onAbout} aria-label={t("About me · Candice Hong")}>
         <span className="gallery-about-mark" aria-hidden="true"><span>C</span><span>H</span></span>
         <span className="gallery-about-label">{t("about me")}</span>
         <ArrowUpRight className="gallery-about-arrow" size={16} aria-hidden="true" />
       </button>
       {mode === "spiral" && <span className="gallery-instruction"><span className="desktop-instruction">{t("scroll or drag")}</span><span className="touch-instruction">{t("swipe to explore")}</span><ArrowDown size={12} /></span>}
-      <div className="gallery-controls">{mode === "spiral" && <button className="gallery-pause" onClick={() => setStopped(!stopped)} aria-label={t(stopped ? "继续旋转作品" : "暂停旋转作品")} aria-pressed={stopped}>{stopped ? <Play size={14} /> : <Pause size={14} />}</button>}<button className="gallery-sound" aria-label={t(soundOn ? "关闭音效" : "开启音效")} aria-pressed={soundOn} onClick={onSound}>{soundOn ? <Volume2 size={17} /> : <VolumeX size={17} />}</button></div>
+      <div className="gallery-controls">{mode === "spiral" && <button className="gallery-pause" data-sound="click" onClick={() => setStopped(!stopped)} aria-label={t(stopped ? "继续旋转作品" : "暂停旋转作品")} aria-pressed={stopped}>{stopped ? <Play size={14} /> : <Pause size={14} />}</button>}<button className="gallery-sound" data-sound="none" aria-label={t(soundOn ? "关闭音效" : "开启音效")} aria-pressed={soundOn} onClick={onSound}>{soundOn ? <Volume2 size={17} /> : <VolumeX size={17} />}</button></div>
     </div>
   </section>;
 }

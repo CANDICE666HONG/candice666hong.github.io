@@ -1,4 +1,5 @@
 import { getLocale, setLocale, subscribe, localizeUrl, initializeLocale } from "/assets/i18n/locale.js?v=20261019-default-en";
+import { getSoundEnabled, subscribeSound, setSoundEnabled, playSound, mountInterfaceAudio } from "/assets/audio/interface-audio.js?v=20261019-sound";
 
 /* The introduction is scrubbed by native scroll position, never by a clock. */
 (() => {
@@ -13,12 +14,14 @@ import { getLocale, setLocale, subscribe, localizeUrl, initializeLocale } from "
   const menu = document.getElementById("site-menu");
   const menuTrigger = document.querySelector(".menu-trigger");
   const controls = document.querySelector(".scroll-controls");
+  const soundControls = [...document.querySelectorAll("[data-sound-toggle]")];
 
   const symbols = [...paragraph.querySelectorAll(".inline-symbol")];
   const languageButtons = [...document.querySelectorAll("[data-language]")];
   const localeLinks = [...document.querySelectorAll('a[href^="/"]')].map(link => ({ link, href: link.getAttribute("href") }));
   const copy = {
     zh: {
+      soundOn: "开启音效", soundOff: "关闭音效",
       bioPractice: "我的实践涵盖游戏社区与积分奖励产品的体验设计，也延伸到学生组织运营与活动执行。",
       languageFact: "语言",
       languageValue: "中文 · 英文",
@@ -83,6 +86,7 @@ import { getLocale, setLocale, subscribe, localizeUrl, initializeLocale } from "
       intro: ["我是洪宇欣，", "一名在广州的交互与视觉设计师。", "带着好奇心，我在交互、视觉设计与计算机艺术之间探索。", "让日常的片刻，成为有意义的体验。"],
     },
     en: {
+      soundOn: "Turn sound on", soundOff: "Turn sound off",
       bioPractice: "My practice spans experience design for game communities and rewards products, alongside student organization operations and event delivery.",
       languageFact: "Languages",
       languageValue: "Chinese · English",
@@ -147,6 +151,19 @@ import { getLocale, setLocale, subscribe, localizeUrl, initializeLocale } from "
       intro: ["I’m Candice Hong, ", " an interaction & visual designer based in Guangzhou. ", " With a curious mind, I explore interaction, visual design and computational art. ", " Turning everyday moments into meaningful experiences."],
     },
   };
+  function syncSoundControls() {
+    const enabled = getSoundEnabled();
+    const label = copy[getLocale()][enabled ? "soundOff" : "soundOn"];
+    soundControls.forEach(button => {
+      button.setAttribute("aria-pressed", String(enabled));
+      button.setAttribute("aria-label", label);
+      button.title = label;
+    });
+  }
+  function toggleSound() {
+    void setSoundEnabled(!getSoundEnabled());
+  }
+
   let tokens = [];
   let localeApplied = false;
 
@@ -196,6 +213,7 @@ import { getLocale, setLocale, subscribe, localizeUrl, initializeLocale } from "
     document.querySelectorAll("[data-i18n-title]").forEach(element => {
       element.title = text[element.dataset.i18nTitle];
     });
+    syncSoundControls();
     languageButtons.forEach(button => button.setAttribute("aria-pressed", String(button.dataset.language === locale)));
     localeLinks.forEach(({ link, href }) => { link.href = localizeUrl(href); });
     rebuildIntroduction(locale);
@@ -267,10 +285,17 @@ import { getLocale, setLocale, subscribe, localizeUrl, initializeLocale } from "
   }
 
   initializeLocale();
+  mountInterfaceAudio();
+  subscribeSound(syncSoundControls);
   applyLocale();
   subscribe(applyLocale);
   languageButtons.forEach(button => button.addEventListener("click", () => setLocale(button.dataset.language)));
   document.querySelectorAll(".language-switch").forEach(control => { control.hidden = false; });
+
+  soundControls.forEach(button => {
+    button.addEventListener("click", toggleSound);
+    button.hidden = false;
+  });
 
   controls.hidden = false;
   menuTrigger.hidden = false;
@@ -300,7 +325,11 @@ import { getLocale, setLocale, subscribe, localizeUrl, initializeLocale } from "
     requestScrollUpdate();
   });
   menu.querySelector(".menu-close").addEventListener("click", closeMenu);
-  menu.addEventListener("cancel", event => { event.preventDefault(); closeMenu(); });
+  menu.addEventListener("cancel", event => {
+    event.preventDefault();
+    if (event.isTrusted && menu.open && !menu.classList.contains("is-closing")) playSound("close");
+    closeMenu();
+  });
   menu.addEventListener("close", () => {
     body.classList.remove("menu-open");
     menu.classList.remove("is-closing");
