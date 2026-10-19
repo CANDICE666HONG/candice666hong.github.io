@@ -1,0 +1,251 @@
+/* Locale controls share the existing header, modal, and opening composition. */
+.header-actions,
+.dialog-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.site-header .wordmark,
+.dialog-actions .menu-button {
+  flex-shrink: 0;
+}
+
+.menu-top {
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.menu-top .dialog-actions {
+  margin-left: auto;
+}
+
+.project-dialog-top {
+  gap: 12px;
+}
+
+.project-dialog-top > .mono {
+  min-width: 0;
+  line-height: 1.5;
+}
+
+.entry-language {
+  position: absolute;
+  z-index: 2;
+  top: 25px;
+  right: calc(4.4% + 125px);
+}
+
+.entry-dialog[data-phase="transition"] .entry-language {
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+}
+
+/* Work is the content view's page heading; retain its established typography. */
+.section-heading h1.work-heading {
+  font-size: clamp(36px, 4.6vw, 68px);
+  letter-spacing: -.055em;
+  font-weight: 400;
+  line-height: 1.03;
+  margin: 29px 0 0;
+}
+
+.section-heading h1.work-heading em {
+  font-family: inherit;
+  font-style: normal;
+  color: var(--primary);
+  font-weight: 400;
+}
+
+/* Translated prose may be longer; let grid and flex children wrap naturally. */
+.project-meta > div,
+.gallery-list-copy,
+.skill-row > div,
+.skill-row p,
+.case-content > div,
+.menu-links a > span:nth-child(2) {
+  min-width: 0;
+}
+
+.project-meta p,
+.gallery-list-description,
+.case-description,
+.case-type,
+.case-content p,
+.skill-row p {
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.gallery-list-name,
+.case-title,
+.skill-row h3 {
+  overflow-wrap: break-word;
+}
+
+.menu-links a > .mono,
+.menu-links a > svg,
+.menu-email > svg {
+  flex-shrink: 0;
+}
+
+/* Keep Chinese glyphs comfortably spaced without changing the English style. */
+html:lang(zh) .intro-type,
+html:lang(zh) .accent-word,
+html:lang(zh) .section-heading h2,
+html:lang(zh) .section-heading h1.work-heading,
+html:lang(zh) .skill-row h3,
+html:lang(zh) .menu-links a > span:nth-child(2),
+html:lang(zh) .contact-title,
+html:lang(zh) .contact-title em,
+html:lang(zh) .entry-title,
+html:lang(zh) .gallery-about-label {
+  letter-spacing: 0;
+}
+
+html:lang(zh) .section-heading h2,
+html:lang(zh) .section-heading h1.work-heading,
+html:lang(zh) .menu-links a > span:nth-child(2),
+html:lang(zh) .contact-title {
+  line-height: 1.2;
+}
+
+html:lang(zh) .entry-title {
+  line-height: 1.5 !important;
+}
+
+@media (max-width: 700px) {
+  html {
+    scroll-padding-top: 128px;
+  }
+
+  .header-actions,
+  .dialog-actions {
+    gap: 8px;
+  }
+
+  .site-header .language-switch,
+  .site-header .menu-button,
+  .dialog-actions .menu-button {
+    min-height: 44px;
+  }
+
+  .dialog-actions .menu-button {
+    gap: 6px;
+    padding: 8px 10px;
+  }
+
+  .gallery-view-switch {
+    top: 72px;
+    gap: 12px;
+  }
+
+  .gallery-view-switch button {
+    min-height: 44px;
+    padding: 10px 5px;
+  }
+
+  .gallery-list {
+    padding-top: 132px;
+  }
+
+  .gallery-keyboard-projects {
+    top: 125px;
+  }
+
+  .portfolio[data-surface="content"] .site-header {
+    height: 118px;
+    align-items: flex-start;
+    padding-top: 19px;
+  }
+
+  .portfolio-content {
+    padding-top: 118px;
+  }
+
+  .entry-language {
+    top: 75px;
+    right: 6%;
+  }
+
+  .menu-top {
+    row-gap: 14px;
+  }
+
+  .project-dialog-top {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .project-dialog-top > .mono {
+    font-size: 11px;
+  }
+
+  .section-heading h1.work-heading {
+    font-size: 42px;
+    margin-top: 25px;
+    line-height: 1.07;
+  }
+
+  .menu-links a > span:nth-child(2) {
+    font-size: clamp(32px, 8.2vw, 49px);
+    overflow-wrap: break-word;
+  }
+
+  .menu-email {
+    max-width: 100%;
+    font-size: clamp(11px, 3.25vw, 14px);
+  }
+
+  html:lang(zh) .contact-title {
+    font-size: clamp(40px, 9.5vw, 66px);
+    padding-right: .95em;
+  }
+
+  html:lang(zh) .section-heading h2,
+  html:lang(zh) .section-heading h1.work-heading {
+    font-size: clamp(32px, 8vw, 42px);
+  }
+}
+
+@media (max-width: 380px) {
+  .header-actions,
+  .dialog-actions {
+    gap: 6px;
+  }
+
+  .site-header .menu-button {
+    gap: 6px;
+    padding: 8px 11px;
+  }
+
+  .menu-top .wordmark {
+    font-size: 19px;
+  }
+
+  .section-heading h1.work-heading {
+    font-size: 37px;
+  }
+
+  .menu-links a {
+    gap: 10px;
+  }
+
+  .menu-links a > .mono {
+    width: 26px;
+  }
+
+  .menu-links a > svg {
+    width: 27px;
+    height: 27px;
+  }
+}
+
+@media (max-height: 500px) and (min-width: 480px) and (max-width: 700px) {
+  .entry-language {
+    top: 17px;
+    right: calc(6% + 120px);
+  }
+}

@@ -4,69 +4,79 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#090909">
-  <title>About · Candice Hong</title>
-  <meta name="description" content="认识洪宇欣 Candice (Yuxin) Hong：在交互、视觉与计算机艺术之间，探索设计、情绪与日常的连接。">
+  <title>关于我 · 洪宇欣</title>
+  <meta name="description" content="认识洪宇欣：在交互、视觉与计算机艺术之间，探索设计、情绪与日常的连接。">
   <link rel="canonical" href="https://candicehong.cn/about/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/assets/about/about.css?v=20261016-clean">
+  <link rel="stylesheet" href="/assets/i18n/language.css?v=20261017-language">
+  <link rel="stylesheet" href="/assets/about/about.css?v=20261017-language">
   <link rel="stylesheet" href="/assets/about/symbols.css?v=20261016-scroll">
-  <script src="/assets/about/about.js?v=20261016-scroll" defer></script>
+  <script type="module" src="/assets/about/about.js?v=20261017-language"></script>
 </head>
 <body>
-  <a class="skip-link" href="#introduction">跳转到自我介绍</a>
+  <a class="skip-link" href="#introduction" data-i18n="skip">跳转到自我介绍</a>
   <div class="stage-grid" aria-hidden="true"></div>
 
   <header class="about-header">
-    <a class="brand" href="/#gallery" aria-label="Candice Hong · 返回作品首页" data-page-link>
+    <a class="brand" href="/#gallery" aria-label="洪宇欣 · 返回作品首页" data-i18n-aria="brandLabel" data-page-link>
       <span class="brand-orb" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 6v12m5.196-9L6.804 15m0-6 10.392 6"/></svg></span>
-      <span class="brand-caption">candice hong.</span>
+      <span class="brand-caption" data-i18n="brand">洪宇欣</span>
     </a>
+    <div class="header-actions">
+      <div class="language-switch" role="group" aria-label="界面语言" data-i18n-aria="languageLabel" hidden>
+        <button type="button" lang="zh-CN" data-language="zh" aria-pressed="true">中文</button>
+        <button type="button" lang="en" data-language="en" aria-pressed="false">EN</button>
+      </div>
     <button class="pill menu-trigger" type="button" aria-haspopup="dialog" aria-controls="site-menu" aria-expanded="false" hidden>
-      <span class="roll-label"><span>menu</span><span aria-hidden="true">menu</span></span><span aria-hidden="true">+</span>
+      <span class="roll-label"><span data-i18n="menu">菜单</span><span aria-hidden="true" data-i18n="menu">菜单</span></span><span aria-hidden="true">+</span>
     </button>
-    <noscript><a class="pill" href="/#gallery">work ↗</a></noscript>
+    <noscript><a class="pill" href="/#gallery">作品 ↗</a></noscript>
+    </div>
   </header>
 
   <main id="main">
     <section class="intro-scroll" id="introduction" aria-labelledby="about-title">
       <div class="intro-stage">
-      <h1 id="about-title" class="sr-only">About Candice Hong / 洪宇欣</h1>
+      <h1 id="about-title" class="sr-only" data-i18n="aboutHeading">关于洪宇欣</h1>
       <div class="intro-copy">
-        <p class="intro-text" lang="en">I’m Candice Hong, <span class="inline-symbol symbol-cursor" aria-hidden="true"><svg class="symbol-vector" viewBox="0 0 64 64" focusable="false"><defs><linearGradient id="ch-fold-face" x1="12" y1="8" x2="49" y2="54" gradientUnits="userSpaceOnUse"><stop stop-color="#f1ffd7"/><stop offset=".23" stop-color="#bcf77b"/><stop offset=".47" stop-color="#71edba"/><stop offset=".7" stop-color="#138b7e"/><stop offset="1" stop-color="#073b42"/></linearGradient><linearGradient id="ch-fold-wing" x1="16" y1="10" x2="32" y2="52" gradientUnits="userSpaceOnUse"><stop stop-color="#e9ffc8"/><stop offset=".42" stop-color="#8feb84"/><stop offset="1" stop-color="#165a44"/></linearGradient></defs><g class="symbol-turn"><path d="m11 12 43 22-19 5 12 7-4 8-11-7-6 11Z" fill="#062f32"/><path d="m11 8 43 22-21 5-7 20Z" fill="url(#ch-fold-face)"/><path d="m33 35 14 8-4 8-11-8-6 12Z" fill="#53cf9d"/><path d="m33 35 14 8-4 3-11-7-6 16Z" fill="#c8ffb5"/><g class="symbol-fold"><path d="m11 8 22 27-7 20Z" fill="url(#ch-fold-wing)"/><path d="m11 8 22 27-7 20" fill="none" stroke="#e8ffd0" stroke-width=".8" stroke-opacity=".75"/></g><path d="m12 9 41 21-20 5" fill="none" stroke="#edffe0" stroke-width=".85" stroke-opacity=".85"/></g></svg></span> an interaction &amp; visual designer based in Guangzhou. <span class="inline-symbol symbol-touch" aria-hidden="true"><svg class="symbol-vector" viewBox="0 0 64 64" focusable="false"><defs><linearGradient id="ch-touch-left" x1="7" y1="17" x2="33" y2="37" gradientUnits="userSpaceOnUse"><stop stop-color="#e6ffc9"/><stop offset=".3" stop-color="#b7f77b"/><stop offset=".66" stop-color="#5ddbaa"/><stop offset="1" stop-color="#10716c"/></linearGradient><linearGradient id="ch-touch-right" x1="57" y1="47" x2="30" y2="27" gradientUnits="userSpaceOnUse"><stop stop-color="#d6ffe8"/><stop offset=".28" stop-color="#88efc3"/><stop offset=".6" stop-color="#39b59b"/><stop offset="1" stop-color="#0c4c53"/></linearGradient><linearGradient id="ch-touch-core" x1="27" y1="27" x2="37" y2="38" gradientUnits="userSpaceOnUse"><stop stop-color="#f2ffd8"/><stop offset=".5" stop-color="#c3ff94"/><stop offset="1" stop-color="#55c58b"/></linearGradient></defs><g class="symbol-turn"><g class="symbol-contact-left"><path d="M6 18h13l16 16-8 9-13-13H6Z" fill="#093d3a"/><path d="M6 14h13l16 16-8 9-13-13H6Z" fill="url(#ch-touch-left)"/><path d="M7 15h11l16 15-7 7" fill="none" stroke="#f0ffce" stroke-width=".8" stroke-opacity=".9"/><path d="m17 19 13 13" fill="none" stroke="#569d58" stroke-width=".8"/></g><g class="symbol-contact-right"><path d="M58 50H45L29 34l8-9 13 13h8Z" fill="#062f36"/><path d="M58 46H45L29 30l8-9 13 13h8Z" fill="url(#ch-touch-right)"/><path d="m30 30 7-8 13 13h7" fill="none" stroke="#b9ffe0" stroke-width=".8" stroke-opacity=".9"/><path d="m35 30 12 12" fill="none" stroke="#17645c" stroke-width=".8"/></g><g class="symbol-contact-core"><path d="m32 26 6 6-6 6-6-6Z" fill="url(#ch-touch-core)"/><path d="m27 32 5-5 5 5" fill="none" stroke="#f5ffe4" stroke-width=".8"/></g></g></svg></span> With a curious mind, I explore interaction, visual design and computational art. <span class="inline-symbol symbol-bloom" aria-hidden="true"><svg class="symbol-vector" viewBox="0 0 64 64" focusable="false"><defs><linearGradient id="ch-bloom-petal" x1="24" y1="9" x2="39" y2="30" gradientUnits="userSpaceOnUse"><stop stop-color="#ecffd2"/><stop offset=".23" stop-color="#b7f77b"/><stop offset=".55" stop-color="#5edda4"/><stop offset=".78" stop-color="#16867b"/><stop offset="1" stop-color="#093d46"/></linearGradient><linearGradient id="ch-bloom-core" x1="27" y1="26" x2="38" y2="39" gradientUnits="userSpaceOnUse"><stop stop-color="#e1ffef"/><stop offset=".5" stop-color="#82efc7"/><stop offset="1" stop-color="#1a7c6b"/></linearGradient></defs><g class="symbol-turn"><g><g class="symbol-petal"><path d="M28 10h10v5h5v10h-7v5h-6v-5h-6V15h4Z" fill="#073f40"/><path d="M27 7h10v5h5v10h-7v5h-6v-5h-6V12h4Z" fill="url(#ch-bloom-petal)"/><path d="M24 21v-8h4V8h8" fill="none" stroke="#e5ffce" stroke-width=".8" stroke-opacity=".85"/><path d="M28 8v13h13" fill="none" stroke="#e3ffc8" stroke-width=".7" stroke-opacity=".6"/></g></g><g transform="rotate(90 32 32)"><g class="symbol-petal"><path d="M28 10h10v5h5v10h-7v5h-6v-5h-6V15h4Z" fill="#073f40"/><path d="M27 7h10v5h5v10h-7v5h-6v-5h-6V12h4Z" fill="url(#ch-bloom-petal)"/><path d="M24 21v-8h4V8h8" fill="none" stroke="#e5ffce" stroke-width=".8" stroke-opacity=".85"/><path d="M28 8v13h13" fill="none" stroke="#e3ffc8" stroke-width=".7" stroke-opacity=".6"/></g></g><g transform="rotate(180 32 32)"><g class="symbol-petal"><path d="M28 10h10v5h5v10h-7v5h-6v-5h-6V15h4Z" fill="#073f40"/><path d="M27 7h10v5h5v10h-7v5h-6v-5h-6V12h4Z" fill="url(#ch-bloom-petal)"/><path d="M24 21v-8h4V8h8" fill="none" stroke="#e5ffce" stroke-width=".8" stroke-opacity=".85"/><path d="M28 8v13h13" fill="none" stroke="#e3ffc8" stroke-width=".7" stroke-opacity=".6"/></g></g><g transform="rotate(270 32 32)"><g class="symbol-petal"><path d="M28 10h10v5h5v10h-7v5h-6v-5h-6V15h4Z" fill="#073f40"/><path d="M27 7h10v5h5v10h-7v5h-6v-5h-6V12h4Z" fill="url(#ch-bloom-petal)"/><path d="M24 21v-8h4V8h8" fill="none" stroke="#e5ffce" stroke-width=".8" stroke-opacity=".85"/><path d="M28 8v13h13" fill="none" stroke="#e3ffc8" stroke-width=".7" stroke-opacity=".6"/></g></g><g class="symbol-bloom-core"><path d="M28 27h9v10h-9Z" fill="#0c5b59"/><path d="M27 26h9v9h-9Z" fill="url(#ch-bloom-core)"/><path d="M27.5 34.5v-8h8" fill="none" stroke="#edfff0" stroke-width=".75"/></g></g></svg></span> Turning everyday moments into meaningful experiences.</p>
+        <p class="intro-text" lang="zh-CN">我是洪宇欣，<span class="inline-symbol symbol-cursor" aria-hidden="true"><svg class="symbol-vector" viewBox="0 0 64 64" focusable="false"><defs><linearGradient id="ch-fold-face" x1="12" y1="8" x2="49" y2="54" gradientUnits="userSpaceOnUse"><stop stop-color="#f1ffd7"/><stop offset=".23" stop-color="#bcf77b"/><stop offset=".47" stop-color="#71edba"/><stop offset=".7" stop-color="#138b7e"/><stop offset="1" stop-color="#073b42"/></linearGradient><linearGradient id="ch-fold-wing" x1="16" y1="10" x2="32" y2="52" gradientUnits="userSpaceOnUse"><stop stop-color="#e9ffc8"/><stop offset=".42" stop-color="#8feb84"/><stop offset="1" stop-color="#165a44"/></linearGradient></defs><g class="symbol-turn"><path d="m11 12 43 22-19 5 12 7-4 8-11-7-6 11Z" fill="#062f32"/><path d="m11 8 43 22-21 5-7 20Z" fill="url(#ch-fold-face)"/><path d="m33 35 14 8-4 8-11-8-6 12Z" fill="#53cf9d"/><path d="m33 35 14 8-4 3-11-7-6 16Z" fill="#c8ffb5"/><g class="symbol-fold"><path d="m11 8 22 27-7 20Z" fill="url(#ch-fold-wing)"/><path d="m11 8 22 27-7 20" fill="none" stroke="#e8ffd0" stroke-width=".8" stroke-opacity=".75"/></g><path d="m12 9 41 21-20 5" fill="none" stroke="#edffe0" stroke-width=".85" stroke-opacity=".85"/></g></svg></span>一名在广州的交互与视觉设计师。<span class="inline-symbol symbol-touch" aria-hidden="true"><svg class="symbol-vector" viewBox="0 0 64 64" focusable="false"><defs><linearGradient id="ch-touch-left" x1="7" y1="17" x2="33" y2="37" gradientUnits="userSpaceOnUse"><stop stop-color="#e6ffc9"/><stop offset=".3" stop-color="#b7f77b"/><stop offset=".66" stop-color="#5ddbaa"/><stop offset="1" stop-color="#10716c"/></linearGradient><linearGradient id="ch-touch-right" x1="57" y1="47" x2="30" y2="27" gradientUnits="userSpaceOnUse"><stop stop-color="#d6ffe8"/><stop offset=".28" stop-color="#88efc3"/><stop offset=".6" stop-color="#39b59b"/><stop offset="1" stop-color="#0c4c53"/></linearGradient><linearGradient id="ch-touch-core" x1="27" y1="27" x2="37" y2="38" gradientUnits="userSpaceOnUse"><stop stop-color="#f2ffd8"/><stop offset=".5" stop-color="#c3ff94"/><stop offset="1" stop-color="#55c58b"/></linearGradient></defs><g class="symbol-turn"><g class="symbol-contact-left"><path d="M6 18h13l16 16-8 9-13-13H6Z" fill="#093d3a"/><path d="M6 14h13l16 16-8 9-13-13H6Z" fill="url(#ch-touch-left)"/><path d="M7 15h11l16 15-7 7" fill="none" stroke="#f0ffce" stroke-width=".8" stroke-opacity=".9"/><path d="m17 19 13 13" fill="none" stroke="#569d58" stroke-width=".8"/></g><g class="symbol-contact-right"><path d="M58 50H45L29 34l8-9 13 13h8Z" fill="#062f36"/><path d="M58 46H45L29 30l8-9 13 13h8Z" fill="url(#ch-touch-right)"/><path d="m30 30 7-8 13 13h7" fill="none" stroke="#b9ffe0" stroke-width=".8" stroke-opacity=".9"/><path d="m35 30 12 12" fill="none" stroke="#17645c" stroke-width=".8"/></g><g class="symbol-contact-core"><path d="m32 26 6 6-6 6-6-6Z" fill="url(#ch-touch-core)"/><path d="m27 32 5-5 5 5" fill="none" stroke="#f5ffe4" stroke-width=".8"/></g></g></svg></span>带着好奇心，我在交互、视觉设计与计算机艺术之间探索。<span class="inline-symbol symbol-bloom" aria-hidden="true"><svg class="symbol-vector" viewBox="0 0 64 64" focusable="false"><defs><linearGradient id="ch-bloom-petal" x1="24" y1="9" x2="39" y2="30" gradientUnits="userSpaceOnUse"><stop stop-color="#ecffd2"/><stop offset=".23" stop-color="#b7f77b"/><stop offset=".55" stop-color="#5edda4"/><stop offset=".78" stop-color="#16867b"/><stop offset="1" stop-color="#093d46"/></linearGradient><linearGradient id="ch-bloom-core" x1="27" y1="26" x2="38" y2="39" gradientUnits="userSpaceOnUse"><stop stop-color="#e1ffef"/><stop offset=".5" stop-color="#82efc7"/><stop offset="1" stop-color="#1a7c6b"/></linearGradient></defs><g class="symbol-turn"><g><g class="symbol-petal"><path d="M28 10h10v5h5v10h-7v5h-6v-5h-6V15h4Z" fill="#073f40"/><path d="M27 7h10v5h5v10h-7v5h-6v-5h-6V12h4Z" fill="url(#ch-bloom-petal)"/><path d="M24 21v-8h4V8h8" fill="none" stroke="#e5ffce" stroke-width=".8" stroke-opacity=".85"/><path d="M28 8v13h13" fill="none" stroke="#e3ffc8" stroke-width=".7" stroke-opacity=".6"/></g></g><g transform="rotate(90 32 32)"><g class="symbol-petal"><path d="M28 10h10v5h5v10h-7v5h-6v-5h-6V15h4Z" fill="#073f40"/><path d="M27 7h10v5h5v10h-7v5h-6v-5h-6V12h4Z" fill="url(#ch-bloom-petal)"/><path d="M24 21v-8h4V8h8" fill="none" stroke="#e5ffce" stroke-width=".8" stroke-opacity=".85"/><path d="M28 8v13h13" fill="none" stroke="#e3ffc8" stroke-width=".7" stroke-opacity=".6"/></g></g><g transform="rotate(180 32 32)"><g class="symbol-petal"><path d="M28 10h10v5h5v10h-7v5h-6v-5h-6V15h4Z" fill="#073f40"/><path d="M27 7h10v5h5v10h-7v5h-6v-5h-6V12h4Z" fill="url(#ch-bloom-petal)"/><path d="M24 21v-8h4V8h8" fill="none" stroke="#e5ffce" stroke-width=".8" stroke-opacity=".85"/><path d="M28 8v13h13" fill="none" stroke="#e3ffc8" stroke-width=".7" stroke-opacity=".6"/></g></g><g transform="rotate(270 32 32)"><g class="symbol-petal"><path d="M28 10h10v5h5v10h-7v5h-6v-5h-6V15h4Z" fill="#073f40"/><path d="M27 7h10v5h5v10h-7v5h-6v-5h-6V12h4Z" fill="url(#ch-bloom-petal)"/><path d="M24 21v-8h4V8h8" fill="none" stroke="#e5ffce" stroke-width=".8" stroke-opacity=".85"/><path d="M28 8v13h13" fill="none" stroke="#e3ffc8" stroke-width=".7" stroke-opacity=".6"/></g></g><g class="symbol-bloom-core"><path d="M28 27h9v10h-9Z" fill="#0c5b59"/><path d="M27 26h9v9h-9Z" fill="url(#ch-bloom-core)"/><path d="M27.5 34.5v-8h8" fill="none" stroke="#edfff0" stroke-width=".75"/></g></g></svg></span>让日常的片刻，成为有意义的体验。</p>
       </div>
       </div>
     </section>
 
     <section class="background-section" id="background" aria-labelledby="background-title">
-      <div class="section-heading"><span class="eyebrow">01 / A LITTLE ABOUT ME</span><span class="eyebrow">GUANGZHOU, CHINA</span></div>
+      <div class="section-heading"><span class="eyebrow" data-i18n="sectionLabel">01 / 关于我</span><span class="eyebrow" data-i18n="location">中国 · 广州</span></div>
       <div class="bio-layout">
-        <div class="bio-title reveal"><h2 id="background-title">A curious mind.<br><span>A human perspective.</span></h2><p class="name">洪宇欣 <span>/ Yuxin Hong</span></p></div>
-        <div class="bio-copy reveal"><p>以人为起点，让设计连接情绪、技术与日常。</p><p>我在交互、视觉与计算机艺术之间，探索体验的更多可能。</p></div>
+        <div class="bio-title reveal"><h2 id="background-title"><span class="bio-heading-main" data-i18n="curiosity">始终好奇。</span><br><span data-i18n="perspective">以人为起点。</span></h2><p class="name" data-i18n="fullName">洪宇欣</p></div>
+        <div class="bio-copy reveal"><p data-i18n="bioFirst">以人为起点，让设计连接情绪、技术与日常。</p><p data-i18n="bioSecond">我在交互、视觉与计算机艺术之间，探索体验的更多可能。</p></div>
       </div>
-      <div class="education" aria-label="教育经历">
-        <article class="education-row reveal"><span class="eyebrow">NOW</span><div><h3>香港科技大学（广州）</h3><p>计算机艺术 · 硕士在读</p></div><span class="education-symbol" aria-hidden="true">↗</span></article>
-        <article class="education-row reveal"><span class="eyebrow">FOUNDATION</span><div><h3 lang="en">Emily Carr University of Art + Design</h3><p>交互设计与平面设计 · 本科</p></div><span class="education-symbol" aria-hidden="true">✳</span></article>
+      <div class="education" aria-label="教育经历" data-i18n-aria="education">
+        <article class="education-row reveal"><span class="eyebrow" data-i18n="now">现在</span><div><h3 data-i18n="graduateSchool">香港科技大学（广州）</h3><p data-i18n="graduateDegree">计算机艺术 · 硕士在读</p></div><span class="education-symbol" aria-hidden="true">↗</span></article>
+        <article class="education-row reveal"><span class="eyebrow" data-i18n="foundation">起点</span><div><h3 data-i18n="undergraduateSchool">艾米丽卡尔艺术与设计大学</h3><p data-i18n="undergraduateDegree">交互设计与平面设计 · 本科</p></div><span class="education-symbol" aria-hidden="true">✳</span></article>
       </div>
-      <div class="about-links reveal"><a href="/#skills" data-page-link>Explore my expertise <span aria-hidden="true">↗</span></a><a href="mailto:yhong423@connect.hkust-gz.edu.cn">Let’s talk <span aria-hidden="true">↗</span></a></div>
-      <footer class="about-footer"><span>© Candice (Yuxin) Hong</span><span>MADE WITH CURIOSITY.</span></footer>
+      <div class="about-links reveal"><a href="/#skills" data-page-link><span data-i18n="expertiseLink">了解我的专长</span> <span aria-hidden="true">↗</span></a><a href="mailto:yhong423@connect.hkust-gz.edu.cn"><span data-i18n="contactLink">聊一聊</span> <span aria-hidden="true">↗</span></a></div>
+      <footer class="about-footer"><span data-i18n="copyright">© 洪宇欣</span><span data-i18n="footerNote">因好奇而创造。</span></footer>
     </section>
   </main>
 
   <div class="about-dock">
-    <a class="work-link" href="/#gallery" data-page-link><span class="work-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>selected work</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>
+    <a class="work-link" href="/#gallery" data-page-link><span class="work-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span data-i18n="workLink">精选作品</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>
     <div class="scroll-controls" hidden>
       <span class="scroll-progress" aria-hidden="true"><span id="scroll-position">00</span><span>/100</span></span>
-      <button class="icon-button" id="intro-start" type="button" aria-label="回到介绍开头" title="回到开头"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6M5 3h14"/></svg></button>
+      <button class="icon-button" id="intro-start" type="button" aria-label="回到介绍开头" title="回到开头" data-i18n-aria="restartLabel" data-i18n-title="restartTitle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6M5 3h14"/></svg></button>
     </div>
   </div>
 
   <dialog class="site-menu" id="site-menu" aria-labelledby="menu-title">
-    <div class="menu-top"><h2 id="menu-title">candice hong.</h2><button class="pill menu-close" type="button">close <span aria-hidden="true">×</span></button></div>
-    <nav aria-label="主导航">
-      <a href="/about/" aria-current="page"><span class="menu-number">01</span><span>About<small>个人简介</small></span><span class="menu-arrow" aria-hidden="true">↗</span></a>
-      <a href="/#gallery" data-page-link><span class="menu-number">02</span><span>Work<small>精选作品</small></span><span class="menu-arrow" aria-hidden="true">↗</span></a>
-      <a href="/#skills" data-page-link><span class="menu-number">03</span><span>Expertise<small>技能专长</small></span><span class="menu-arrow" aria-hidden="true">↗</span></a>
-      <a href="/#contact" data-page-link><span class="menu-number">04</span><span>Contact<small>联系我</small></span><span class="menu-arrow" aria-hidden="true">↗</span></a>
+    <div class="menu-top"><h2 id="menu-title" data-i18n="brand">洪宇欣</h2><div class="language-switch" role="group" aria-label="界面语言" data-i18n-aria="languageLabel" hidden>
+        <button type="button" lang="zh-CN" data-language="zh" aria-pressed="true">中文</button>
+        <button type="button" lang="en" data-language="en" aria-pressed="false">EN</button>
+      </div><button class="pill menu-close" type="button"><span data-i18n="close">关闭</span> <span aria-hidden="true">×</span></button></div>
+    <nav aria-label="主导航" data-i18n-aria="navigation">
+      <a href="/about/" aria-current="page"><span class="menu-number">01</span><span data-i18n="navAbout">关于我</span><span class="menu-arrow" aria-hidden="true">↗</span></a>
+      <a href="/#gallery" data-page-link><span class="menu-number">02</span><span data-i18n="navWork">作品</span><span class="menu-arrow" aria-hidden="true">↗</span></a>
+      <a href="/#skills" data-page-link><span class="menu-number">03</span><span data-i18n="navExpertise">专长</span><span class="menu-arrow" aria-hidden="true">↗</span></a>
+      <a href="/#contact" data-page-link><span class="menu-number">04</span><span data-i18n="navContact">联系我</span><span class="menu-arrow" aria-hidden="true">↗</span></a>
     </nav>
     <a class="menu-email" href="mailto:yhong423@connect.hkust-gz.edu.cn">yhong423@connect.hkust-gz.edu.cn <span aria-hidden="true">↗</span></a>
   </dialog>

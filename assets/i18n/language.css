@@ -1,0 +1,11 @@
+.language-switch { display: inline-flex; align-items: center; flex-shrink: 0; min-height: 44px; padding: 0 4px; gap: 1px; border: 1px solid #ffffff24; border-radius: 100px; background: #0a0a0ae6; color: #8c8c86; font: 12px/1 Arial, "PingFang SC", sans-serif; }
+.language-switch button { min-width: 34px; min-height: 42px; padding: 0 5px; border: 0; border-radius: 100px; background: transparent; color: inherit; font: inherit; cursor: pointer; transition: color .2s; }
+.language-switch button[aria-pressed="true"] { color: #bcf77b; }
+.language-switch button:hover { color: #fff; }
+.language-switch button:focus-visible { outline: 2px solid #bcf77b; outline-offset: 1px; }
+.language-switch > span { opacity: .45; }
+.site-menu .language-switch { background: #e7e7e1; border-color: #0002; color: #666; }
+.site-menu .language-switch button[aria-pressed="true"], .site-menu .language-switch button:hover { color: #1c4816; }
+.site-menu .language-switch button:focus-visible { outline-color: #385c1c; }
+html[lang="zh-CN"] .language-switch button { letter-spacing: 0; }
+@media (prefers-reduced-motion: reduce) { .language-switch button { transition: none; } }
