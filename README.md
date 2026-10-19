@@ -35,7 +35,7 @@ Run `node scripts/check-locale.mjs` to verify preference, URL, and storage behav
 
 ## Independent About page
 
-- `about/index.html`: introduction, biography, education and page navigation.
+- `about/index.html`: introduction, education, internship and community experience, and page navigation.
 - `assets/about/about.css`: responsive layout and a sticky introduction stage.
 - `assets/about/symbols.css`: original folded cursor, connecting touchpoints and pixel bloom.
 - `assets/about/about.js`: reversible native-scroll motion and accessible dialog navigation.
