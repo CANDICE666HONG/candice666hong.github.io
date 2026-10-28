@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRight, ArrowUp, Plus, Volume2, VolumeX, X } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose, DialogTrigger } from "@/components/ui/dialog";
 import { IntroOrb, PortfolioExperience, RollingText, useInterfaceAudio, type EntryPhase } from "@/components/portfolio-experience";
-import { SpiralGallery, type GalleryMode } from "@/components/spiral-gallery";
+import { SpiralGallery, type GalleryMode, type GalleryProject } from "@/components/spiral-gallery";
 import { LanguageSwitch } from "@/components/language-switch";
 import { useLocale } from "@/lib/i18n";
 import { projectData, skillData } from "@/lib/portfolio-content";
@@ -30,6 +30,15 @@ export default function Home() {
     approach: t(project.approach), outcome: t(project.outcome), tools: t(project.tools),
     summary: t(project.description.split("。")[0] + "。"),
   })), [t]);
+  const drawingsHref = `/drawings/?lang=${locale}`;
+  const galleryProjects = useMemo<GalleryProject[]>(() => [...projects, {
+    id: "drawings", number: "05", title: t("Drawings"), image: "drawings/drawing-55.jpg",
+    alt: t("A drawing from Candice Hong’s collection"),
+    category: t("DRAWINGS · VISUAL EXPLORATION"),
+    description: t("Figures, imagined nature and stories in line."),
+    summary: t("Figures, imagined nature and stories in line."),
+    href: drawingsHref, actionLabel: t("Explore the drawings collection"),
+  }], [projects, t, drawingsHref]);
   const [entryPhase, setEntryPhase] = useState<EntryPhase>("prelude");
   const [surface, setSurface] = useState<"gallery" | "content">("gallery");
   const [galleryMode, setGalleryMode] = useState<GalleryMode>("spiral");
@@ -59,21 +68,27 @@ export default function Home() {
     window.history.replaceState(window.history.state, "", window.location.pathname + window.location.search);
     window.scrollTo({ top: 0, behavior: "instant" });
   };
-  const showAbout = () => {
+  const showPage = (path: "/about/" | "/drawings/") => {
     if (leaving.current) return;
     leaving.current = true;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      window.location.assign(localizeUrl("/about/"));
+      window.location.assign(localizeUrl(path));
       return;
     }
     document.documentElement.classList.add("about-route-leaving");
-    departure.current = setTimeout(() => window.location.assign(localizeUrl("/about/")), 400);
+    departure.current = setTimeout(() => window.location.assign(localizeUrl(path)), 400);
+  };
+  const showAbout = () => showPage("/about/");
+  const openGalleryItem = (id: string) => {
+    if (id === "drawings") showPage("/drawings/");
+    else setActiveId(id);
   };
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) setGalleryMode("list");
     const followHash = () => {
       const id = window.location.hash.slice(1);
       if (id === "about") window.location.replace(localizeUrl("/about/"));
+      else if (id === "drawings") window.location.replace(localizeUrl("/drawings/"));
       else if (["work", "skills", "contact"].includes(id)) showSection(id);
       else if (!id || id === "gallery") setSurface("gallery");
     };
@@ -105,8 +120,8 @@ export default function Home() {
   useEffect(() => {
     document.title = locale === "zh" ? "洪宇欣 · 交互与视觉设计师" : "Candice Hong · Interaction & Visual Designer";
     document.querySelector('meta[name="description"]')?.setAttribute("content", locale === "zh"
-      ? "洪宇欣的个人作品集。探索交互设计、视觉叙事与计算机艺术：Dream Illustrator、Buzzing、Recall 与 Consistent。"
-      : "Candice (Yuxin) Hong’s portfolio. Explore interaction design, visual storytelling and computational art through Dream Illustrator, Buzzing, Recall and Consistent.");
+      ? "洪宇欣的个人作品集。探索交互设计、视觉叙事、计算机艺术与绘画：Dream Illustrator、Buzzing、Recall、Consistent 及绘画作品集。"
+      : "Candice (Yuxin) Hong’s portfolio. Explore interaction design, visual storytelling, computational art and drawings through Dream Illustrator, Buzzing, Recall, Consistent and the Drawings collection.");
   }, [locale]);
   const copyEmail = async () => {
     if (copyTimer.current) clearTimeout(copyTimer.current);
@@ -129,11 +144,12 @@ export default function Home() {
           <DialogTrigger asChild><button className="menu-button" data-sound="open" data-magnetic><RollingText>{t("menu")}</RollingText> <Plus size={17} aria-hidden="true" /></button></DialogTrigger>
           <DialogContent className="navigation-dialog" showCloseButton={false} onCloseAutoFocus={event => { const id = navTarget.current; if (id) { event.preventDefault(); navTarget.current = null; showSection(id); } }}>
             <div className="menu-top"><span className="wordmark">{locale === "zh" ? "洪宇欣" : "candice hong."}</span><div className="dialog-actions"><SoundToggle soundOn={soundOn} onToggle={() => void setSound(!soundOn)} /><LanguageSwitch /><DialogClose asChild><button className="menu-button" data-sound="close" data-magnetic><RollingText>{t("close")}</RollingText> <X size={16} aria-hidden="true" /></button></DialogClose></div></div>
-            <DialogTitle className="sr-only">{t("网站导航")}</DialogTitle><DialogDescription className="sr-only">{t("跳转至个人简介、精选作品、技能专长或联系方式。")}</DialogDescription>
-            <nav className="menu-links" aria-label={t("主导航")}>{[["about", "About"], ["work", "Work"], ["skills", "Expertise"], ["contact", "Contact"]].map(([id, label], index) => <a href={id === "about" ? aboutHref : `#${id}`} key={id} data-sound="open" onClick={event => {
+            <DialogTitle className="sr-only">{t("网站导航")}</DialogTitle><DialogDescription className="sr-only">{t("Go to About, selected work, drawings, expertise or contact.")}</DialogDescription>
+            <nav className="menu-links" aria-label={t("主导航")}>{[["about", "About"], ["work", "Work"], ["drawings", "Drawings"], ["skills", "Expertise"], ["contact", "Contact"]].map(([id, label], index) => <a href={id === "about" ? aboutHref : id === "drawings" ? drawingsHref : `#${id}`} key={id} data-sound="open" onClick={event => {
               if (!ordinaryClick(event)) return;
               event.preventDefault();
               if (id === "about") showAbout();
+              else if (id === "drawings") showPage("/drawings/");
               else { navTarget.current = id; setMenuOpen(false); }
             }}><span className="mono">0{index + 1}</span><span>{t(label)}</span><ArrowUpRight aria-hidden="true" /></a>)}</nav>
             <a className="menu-email" data-sound="open" href="mailto:yhong423@connect.hkust-gz.edu.cn">yhong423@connect.hkust-gz.edu.cn <ArrowUpRight size={18} /></a>
@@ -142,11 +158,19 @@ export default function Home() {
       </div>
     </header>
     <main>
-      <div hidden={surface !== "gallery"}><SpiralGallery projects={projects} mode={galleryMode} enabled={surface === "gallery" && (entryPhase === "transition" || entryPhase === "complete")} paused={menuOpen || active !== null} soundOn={soundOn} onSound={() => void setSound(!soundOn)} onOpen={setActiveId} onAbout={showAbout} /></div>
+      <div hidden={surface !== "gallery"}><SpiralGallery projects={galleryProjects} mode={galleryMode} enabled={surface === "gallery" && (entryPhase === "transition" || entryPhase === "complete")} paused={menuOpen || active !== null} soundOn={soundOn} onSound={() => void setSound(!soundOn)} onOpen={openGalleryItem} onAbout={showAbout} /></div>
       <div className="portfolio-content" hidden={surface !== "content"}>
         <section id="work" className="work-section section-shell">
           <div className="section-heading reveal"><div><SectionLabel index="02">{t("SELECTED WORK / 精选作品")}</SectionLabel><h1 className="work-heading">{t("A few things")}<br />{t("I’ve put my ")}<em>{t("mind")}</em>{t(" into.")}</h1></div><span className="project-count mono">{t("INDEX — 01/04")}</span></div>
           <div className="project-grid">{projects.map(project => <button key={project.id} className={`project-card project-${project.id} reveal`} data-sound="open" onClick={() => setActiveId(project.id)} aria-label={t("查看 {title} 项目详情", { title: project.title })}><div className="project-image"><img src={`/images/${project.image}`} alt={project.alt} loading="lazy" width="1200" height="960" /><span className="image-index mono">({project.number})</span><span className="view-project">{t("View project")} <ArrowUpRight size={18} /></span></div><div className="project-meta"><div><span className="project-category mono">{project.category}</span><h3>{project.title}</h3><p>{project.summary}</p></div><span className="project-arrow"><ArrowUpRight size={25} strokeWidth={1.3} /></span></div></button>)}</div>
+          <a className="drawings-collection reveal" href={drawingsHref} data-sound="open" onClick={event => {
+            if (!ordinaryClick(event)) return;
+            event.preventDefault();
+            showPage("/drawings/");
+          }}>
+            <span className="drawings-collection-image"><img src="/images/drawings/drawing-55.jpg" alt={t("A drawing from Candice Hong’s collection")} loading="lazy" width="1280" height="959" /></span>
+            <div className="drawings-collection-copy"><span className="drawings-collection-category mono">{t("DRAWINGS · VISUAL EXPLORATION")}</span><h2>{t("Drawings")}</h2><span className="drawings-collection-description">{t("Figures, imagined nature and stories in line.")}</span><span className="drawings-collection-action">{t("Explore drawings")}<ArrowUpRight size={23} strokeWidth={1.4} aria-hidden="true" /></span></div>
+          </a>
         </section>
         <section id="skills" className="skills-section section-shell">
           <div className="section-heading reveal"><div><SectionLabel index="03">{t("EXPERTISE / 技能专长")}</SectionLabel><h2>{t("Different tools.")}<br /><span className="muted-line">{t("One curious mind.")}</span></h2></div><p className="skills-note">{t("从理解问题，到原型与表达。")}<br />{t("让每一种工具，为体验服务。")}</p></div>

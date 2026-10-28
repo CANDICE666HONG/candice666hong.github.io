@@ -11,7 +11,7 @@ const build = spawnSync(process.execPath, ['node_modules/next/dist/bin/next', 'b
 if (build.status !== 0) process.exit(build.status ?? 1);
 const output = resolve(source, 'out');
 if (!existsSync(resolve(output, 'index.html'))) throw new Error('Static export did not produce index.html');
-const protectedPaths = new Set(['about', 'assets', 'images', 'CNAME', '.nojekyll', 'source', 'scripts']);
+const protectedPaths = new Set(['about', 'drawings', 'assets', 'images', 'CNAME', '.nojekyll', 'source', 'scripts']);
 const entries = readdirSync(output);
 for (const entry of entries) {
   if (protectedPaths.has(entry)) throw new Error(`Export conflicts with maintained path: ${entry}`);

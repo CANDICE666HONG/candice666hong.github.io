@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
 import { ArrowDown, ArrowUpRight, Pause, Play, Volume2, VolumeX } from "lucide-react";
 import { useLocale } from "@/lib/i18n";
 import { playSound } from "../../assets/audio/interface-audio.js";
 
 export type GalleryMode = "spiral" | "list";
-export type GalleryProject = { id: string; number: string; title: string; image: string; alt: string; category: string; description: string; summary?: string };
+export type GalleryProject = { id: string; number: string; title: string; image: string; alt: string; category: string; description: string; summary?: string; href?: string; actionLabel?: string };
 const SEGMENTS = 12;
 const COPIES = 4;
 const TAU = Math.PI * 2;
@@ -41,6 +41,15 @@ export function SpiralGallery({ projects, mode, enabled, paused, soundOn, onSoun
   const wasDragged = useRef(false);
   const [stopped, setStopped] = useState(false);
   const [hovered, setHovered] = useState<GalleryProject | null>(null);
+  const labelFor = (project: GalleryProject) => project.actionLabel ?? t("查看 {title} 项目详情", { title: project.title });
+  const followCollection = (event: MouseEvent<HTMLAnchorElement>, project: GalleryProject, inSpiral = false) => {
+    if (inSpiral && wasDragged.current) { event.preventDefault(); return; }
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    // Curved cards suppress delegated clicks so a completed drag stays silent.
+    if (inSpiral) playSound("open");
+    onOpen(project.id);
+  };
 
   useEffect(() => {
     const stage = viewport.current;
@@ -167,18 +176,27 @@ export function SpiralGallery({ projects, mode, enabled, paused, soundOn, onSoun
       <div className="spiral-arrival"><div className="spiral-axis" ref={axis}>
         {Array.from({ length: projects.length * COPIES }, (_, index) => {
           const project = projects[index % projects.length];
+          if (project.href) return <a className={`spiral-card spiral-${project.id}`} key={index} href={project.href} data-project={project.id} data-sound="none" draggable={false}
+            tabIndex={-1} aria-hidden="true" aria-label={labelFor(project)} onClick={event => followCollection(event, project, true)}>
+            <CurvedCover project={project} />
+          </a>;
           return <button className={`spiral-card spiral-${project.id}`} key={index} data-project={project.id} data-sound="none"
-            tabIndex={-1} aria-hidden="true" aria-label={t("查看 {title} 项目详情", { title: project.title })} onClick={() => { if (!wasDragged.current) { playSound("open"); onOpen(project.id); } }}>
+            tabIndex={-1} aria-hidden="true" aria-label={labelFor(project)} onClick={() => { if (!wasDragged.current) { playSound("open"); onOpen(project.id); } }}>
             <CurvedCover project={project} />
           </button>;
         })}
       </div></div>
-      <div className="gallery-keyboard-projects">{projects.map(project => <button key={project.id} data-sound="open" onClick={() => onOpen(project.id)}>{t("查看 {title} 项目详情", { title: project.title })}</button>)}</div>
+      <div className="gallery-keyboard-projects">{projects.map(project => project.href
+        ? <a key={project.id} href={project.href} data-sound="open" onClick={event => followCollection(event, project)}>{labelFor(project)}</a>
+        : <button key={project.id} data-sound="open" onClick={() => onOpen(project.id)}>{labelFor(project)}</button>)}</div>
       <div className="gallery-hover-label" data-visible={!!hovered}>{hovered?.title}<ArrowUpRight size={14} /></div>
-    </div> : <div className="gallery-list">{projects.map(project => <button className="gallery-list-item" key={project.id} data-sound="open" onClick={() => onOpen(project.id)}>
-      <span className="gallery-list-number">{project.number}</span><img src={`/images/${project.image}`} alt={project.alt} />
-      <span className="gallery-list-copy"><span className="gallery-list-category">{project.category}</span><span className="gallery-list-name">{project.title}</span><span className="gallery-list-description">{project.summary ?? project.description}</span></span><ArrowUpRight className="gallery-list-arrow" strokeWidth={1.2} />
-    </button>)}</div>}
+    </div> : <div className="gallery-list">{projects.map(project => {
+      const content = <><span className="gallery-list-number">{project.number}</span><img src={`/images/${project.image}`} alt={project.alt} />
+        <span className="gallery-list-copy"><span className="gallery-list-category">{project.category}</span><span className="gallery-list-name">{project.title}</span><span className="gallery-list-description">{project.summary ?? project.description}</span></span><ArrowUpRight className="gallery-list-arrow" strokeWidth={1.2} aria-hidden="true" /></>;
+      return project.href
+        ? <a className={`gallery-list-item gallery-list-${project.id}`} key={project.id} href={project.href} data-sound="open" onClick={event => followCollection(event, project)}>{content}</a>
+        : <button className="gallery-list-item" key={project.id} data-sound="open" onClick={() => onOpen(project.id)}>{content}</button>;
+    })}</div>}
     <div className="gallery-bottom">
       <button className="gallery-about" data-sound="open" onClick={onAbout} aria-label={t("About me · Candice Hong")}>
         <span className="gallery-about-mark" aria-hidden="true"><span>C</span><span>H</span></span>

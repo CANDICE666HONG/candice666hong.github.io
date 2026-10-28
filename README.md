@@ -3,8 +3,8 @@
 Live site: https://candicehong.cn/
 
 The repository root is the GitHub Pages publishing directory. `source/` contains
-the editable Next.js homepage; the independent About page is plain HTML/CSS/JS.
-Keep `CNAME`, `.nojekyll`, `images/`, `about/`, and `assets/` when rebuilding.
+the editable Next.js homepage; the independent About and Drawings pages are plain HTML/CSS/JS.
+Keep `CNAME`, `.nojekyll`, `images/`, `about/`, `drawings/`, and `assets/` when rebuilding.
 
 ## Build the homepage
 
@@ -77,3 +77,21 @@ GitHub Pages serves `/about/` directly, including refresh. The React homepage
 handles the transition and redirects legacy `/#about` links. The older
 `assets/about/navigation.js` bridge remains available for cached exports but is
 not loaded by the rebuilt homepage.
+
+## Drawing gallery
+
+`drawings/index.html` and `assets/drawings/drawings.css` / `drawings.js` implement
+the independent `/drawings/` collection, with shared language and sound preferences.
+The homepage adds a separate collection entry alongside its four design projects;
+it does not treat drawings as an additional design case study.
+
+The gallery displays eight original photographs from `images/drawings/`, ordered
+55, 50, 54, 51, 52, 53, 56, 57. Image bytes and proportions are preserved; 57 is
+a photograph of two drawings and remains together. No dates, materials or physical
+dimensions are inferred. The bilingual presentation titles can be edited in the
+gallery's HTML and translation catalog when the artist supplies final titles.
+
+All artworks and links work without JavaScript. JavaScript adds category filters,
+an accessible image viewer with previous/next and zoom controls, and optional
+interface sounds. The full collection uses a two-column desktop layout with
+full-width opening and closing images, then becomes a single column on phones.

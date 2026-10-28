@@ -80,9 +80,9 @@ import { getSoundEnabled, subscribeSound, setSoundEnabled, playSound, mountInter
       education: "教育经历", now: "现在", foundation: "起点",
       graduateSchool: "香港科技大学（广州）", graduateDegree: "计算机艺术 · 硕士在读",
       undergraduateSchool: "艾米丽卡尔艺术与设计大学", undergraduateDegree: "交互设计与平面设计 · 本科",
-      expertiseLink: "了解我的专长", contactLink: "聊一聊", copyright: "© 洪宇欣", footerNote: "因好奇而创造。",
+      expertiseLink: "了解我的专长", drawingsLink: "查看绘画", contactLink: "聊一聊", copyright: "© 洪宇欣", footerNote: "因好奇而创造。",
       workLink: "精选作品", restartLabel: "回到介绍开头", restartTitle: "回到开头", navigation: "主导航",
-      navAbout: "关于我", navWork: "作品", navExpertise: "专长", navContact: "联系我",
+      navAbout: "关于我", navWork: "作品", navDrawings: "绘画", navExpertise: "专长", navContact: "联系我",
       intro: ["我是洪宇欣，", "一名在广州的交互与视觉设计师。", "带着好奇心，我在交互、视觉设计与计算机艺术之间探索。", "让日常的片刻，成为有意义的体验。"],
     },
     en: {
@@ -145,9 +145,9 @@ import { getSoundEnabled, subscribeSound, setSoundEnabled, playSound, mountInter
       education: "Education", now: "NOW", foundation: "FOUNDATION",
       graduateSchool: "The Hong Kong University of Science and Technology (Guangzhou)", graduateDegree: "Computational Art · Master’s student",
       undergraduateSchool: "Emily Carr University of Art + Design", undergraduateDegree: "Interaction & Graphic Design · Bachelor’s degree",
-      expertiseLink: "Explore my expertise", contactLink: "Let’s talk", copyright: "© Candice (Yuxin) Hong", footerNote: "MADE WITH CURIOSITY.",
+      expertiseLink: "Explore my expertise", drawingsLink: "View drawings", contactLink: "Let’s talk", copyright: "© Candice (Yuxin) Hong", footerNote: "MADE WITH CURIOSITY.",
       workLink: "selected work", restartLabel: "Back to the start of the introduction", restartTitle: "Back to the start", navigation: "Main navigation",
-      navAbout: "About", navWork: "Work", navExpertise: "Expertise", navContact: "Contact",
+      navAbout: "About", navWork: "Work", navDrawings: "Drawings", navExpertise: "Expertise", navContact: "Contact",
       intro: ["I’m Candice Hong, ", " an interaction & visual designer based in Guangzhou. ", " With a curious mind, I explore interaction, visual design and computational art. ", " Turning everyday moments into meaningful experiences."],
     },
   };
