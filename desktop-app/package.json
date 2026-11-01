@@ -1,6 +1,6 @@
 {
   "name": "desktop-tides-windows",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "桌边潮汐 — a quiet, offline desktop bay",
   "author": "Candice Hong",
@@ -27,7 +27,7 @@
       "icon": "resources/icon.ico",
       "requestedExecutionLevel": "asInvoker"
     },
-    "portable": { "requestExecutionLevel": "user", "unpackDirName": "DesktopTides-1.0.0" },
+    "portable": { "requestExecutionLevel": "user", "unpackDirName": false },
     "publish": null
   }
 }

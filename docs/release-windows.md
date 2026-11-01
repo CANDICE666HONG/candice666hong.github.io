@@ -8,9 +8,9 @@ The Windows application is built from `source-games/desktop-tides` and `desktop-
 
 A read-only version check skips desktop packaging when that version is already published. The read-only Windows build job installs Node 24.22.1 and pnpm 11.25.0. It uses npm for the game's standalone dependencies and the scoped pnpm lockfile for the desktop builder, then runs the game tests and executes `node scripts/build-desktop.mjs`. It records the source commit and SHA-256 checksum alongside the EXE. The separate release job has `contents: write`, verifies the transferred artifact, uploads a draft release, and publishes only after both files are uploaded. No repository secrets or personal token are required.
 
-Initial public download:
+Public download for the verified desktop package:
 
-`https://github.com/CANDICE666HONG/candice666hong.github.io/releases/download/desktop-tides-v1.0.0/Desktop-Tides-Windows.exe`
+`https://github.com/CANDICE666HONG/candice666hong.github.io/releases/download/desktop-tides-v1.0.1/Desktop-Tides-Windows.exe`
 
 The accompanying checksum is the same URL with `.sha256` appended. A successful workflow run is required before this URL is available. Download the public file and check its hash before describing a release as live.
 
