@@ -6,7 +6,7 @@ The Windows application is built from `source-games/desktop-tides` and `desktop-
 
 `.github/workflows/release-desktop-tides.yml` runs on relevant changes to `main`, or through **Actions → Desktop Tides Windows → Run workflow** on `main`.
 
-A read-only version check skips desktop packaging when that version is already published. The read-only Windows build job installs Node 24.22.1 and pnpm 11.25.0, runs the game tests, and executes `node scripts/build-desktop.mjs`. It records the source commit and SHA-256 checksum alongside the EXE. The separate release job has `contents: write`, verifies the transferred artifact, uploads a draft release, and publishes only after both files are uploaded. No repository secrets or personal token are required.
+A read-only version check skips desktop packaging when that version is already published. The read-only Windows build job installs Node 24.22.1 and pnpm 11.25.0. It uses npm for the game's standalone dependencies and the scoped pnpm lockfile for the desktop builder, then runs the game tests and executes `node scripts/build-desktop.mjs`. It records the source commit and SHA-256 checksum alongside the EXE. The separate release job has `contents: write`, verifies the transferred artifact, uploads a draft release, and publishes only after both files are uploaded. No repository secrets or personal token are required.
 
 Initial public download:
 
