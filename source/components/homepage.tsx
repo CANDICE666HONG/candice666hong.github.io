@@ -25,6 +25,7 @@ export default function Home() {
   const { locale, t } = useLocale();
   const projects = useMemo(() => projectData.map(project => ({
     ...project,
+    title: project.id === "desktop-tides" ? t(project.title) : project.title,
     subtitle: t(project.subtitle), category: t(project.category), alt: t(project.alt),
     type: t(project.type), description: t(project.description), focus: t(project.focus),
     approach: t(project.approach), outcome: t(project.outcome), tools: t(project.tools),
@@ -32,7 +33,7 @@ export default function Home() {
   })), [t]);
   const drawingsHref = `/drawings/?lang=${locale}`;
   const galleryProjects = useMemo<GalleryProject[]>(() => [...projects, {
-    id: "drawings", number: "05", title: t("Drawings"), image: "drawings/drawing-55.jpg",
+    id: "drawings", number: String(projects.length + 1).padStart(2, "0"), title: t("Drawings"), image: "drawings/drawing-55.jpg",
     alt: t("A drawing from Candice Hong’s collection"),
     category: t("DRAWINGS · VISUAL EXPLORATION"),
     description: t("Figures, imagined nature and stories in line."),
@@ -47,6 +48,10 @@ export default function Home() {
   const navTarget = useRef<string | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
   const active = projects.find(project => project.id === activeId) ?? null;
+  const projectCount = String(projects.length).padStart(2, "0");
+  const projectReturnHash = useRef("");
+  const gameProjectOpener = useRef<HTMLElement | null>(null);
+  const restoreGameProjectFocus = useRef(false);
   const [copyMessage, setCopyMessage] = useState("复制邮箱 ↗");
   const leaving = useRef(false);
   const departure = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -79,14 +84,35 @@ export default function Home() {
     departure.current = setTimeout(() => window.location.assign(localizeUrl(path)), 400);
   };
   const showAbout = () => showPage("/about/");
+  const openProject = (id: string) => {
+    setActiveId(id);
+    if (id === "desktop-tides") {
+      gameProjectOpener.current = document.activeElement instanceof HTMLElement && document.activeElement !== document.body ? document.activeElement : null;
+      projectReturnHash.current = window.location.hash === "#desktop-tides" ? "" : window.location.hash;
+      window.history.replaceState(window.history.state, "", `${window.location.pathname}${window.location.search}#desktop-tides`);
+    }
+  };
+  const closeProject = () => {
+    restoreGameProjectFocus.current = activeId === "desktop-tides";
+    setActiveId(null);
+    if (window.location.hash === "#desktop-tides") {
+      window.history.replaceState(window.history.state, "", `${window.location.pathname}${window.location.search}${projectReturnHash.current}`);
+    }
+  };
   const openGalleryItem = (id: string) => {
     if (id === "drawings") showPage("/drawings/");
-    else setActiveId(id);
+    else openProject(id);
   };
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) setGalleryMode("list");
     const followHash = () => {
       const id = window.location.hash.slice(1);
+      if (id === "desktop-tides") {
+        setEntryPhase("complete");
+        setActiveId("desktop-tides");
+        return;
+      }
+      setActiveId(current => current === "desktop-tides" ? null : current);
       if (id === "about") window.location.replace(localizeUrl("/about/"));
       else if (id === "drawings") window.location.replace(localizeUrl("/drawings/"));
       else if (["work", "skills", "contact"].includes(id)) showSection(id);
@@ -120,8 +146,8 @@ export default function Home() {
   useEffect(() => {
     document.title = locale === "zh" ? "洪宇欣 · 交互与视觉设计师" : "Candice Hong · Interaction & Visual Designer";
     document.querySelector('meta[name="description"]')?.setAttribute("content", locale === "zh"
-      ? "洪宇欣的个人作品集。探索交互设计、视觉叙事、计算机艺术与绘画：Dream Illustrator、Buzzing、Recall、Consistent 及绘画作品集。"
-      : "Candice (Yuxin) Hong’s portfolio. Explore interaction design, visual storytelling, computational art and drawings through Dream Illustrator, Buzzing, Recall, Consistent and the Drawings collection.");
+      ? "洪宇欣的个人作品集。探索交互设计、视觉叙事、计算机艺术与绘画：Dream Illustrator、Buzzing、Recall、Consistent、桌边潮汐及绘画作品集。"
+      : "Candice (Yuxin) Hong’s portfolio. Explore interaction design, visual storytelling, computational art and drawings through Dream Illustrator, Buzzing, Recall, Consistent, Desktop Tides and the Drawings collection.");
   }, [locale]);
   const copyEmail = async () => {
     if (copyTimer.current) clearTimeout(copyTimer.current);
@@ -161,8 +187,8 @@ export default function Home() {
       <div hidden={surface !== "gallery"}><SpiralGallery projects={galleryProjects} mode={galleryMode} enabled={surface === "gallery" && (entryPhase === "transition" || entryPhase === "complete")} paused={menuOpen || active !== null} soundOn={soundOn} onSound={() => void setSound(!soundOn)} onOpen={openGalleryItem} onAbout={showAbout} /></div>
       <div className="portfolio-content" hidden={surface !== "content"}>
         <section id="work" className="work-section section-shell">
-          <div className="section-heading reveal"><div><SectionLabel index="02">{t("SELECTED WORK / 精选作品")}</SectionLabel><h1 className="work-heading">{t("A few things")}<br />{t("I’ve put my ")}<em>{t("mind")}</em>{t(" into.")}</h1></div><span className="project-count mono">{t("INDEX — 01/04")}</span></div>
-          <div className="project-grid">{projects.map(project => <button key={project.id} className={`project-card project-${project.id} reveal`} data-sound="open" onClick={() => setActiveId(project.id)} aria-label={t("查看 {title} 项目详情", { title: project.title })}><div className="project-image"><img src={`/images/${project.image}`} alt={project.alt} loading="lazy" width="1200" height="960" /><span className="image-index mono">({project.number})</span><span className="view-project">{t("View project")} <ArrowUpRight size={18} /></span></div><div className="project-meta"><div><span className="project-category mono">{project.category}</span><h3>{project.title}</h3><p>{project.summary}</p></div><span className="project-arrow"><ArrowUpRight size={25} strokeWidth={1.3} /></span></div></button>)}</div>
+          <div className="section-heading reveal"><div><SectionLabel index="02">{t("SELECTED WORK / 精选作品")}</SectionLabel><h1 className="work-heading">{t("A few things")}<br />{t("I’ve put my ")}<em>{t("mind")}</em>{t(" into.")}</h1></div><span className="project-count mono">{t("INDEX — 01/{count}", { count: projectCount })}</span></div>
+          <div className="project-grid">{projects.map(project => <button key={project.id} className={`project-card project-${project.id} reveal`} data-sound="open" onClick={() => openProject(project.id)} aria-label={t("查看 {title} 项目详情", { title: project.title })}><div className="project-image"><img src={`/images/${project.image}`} alt={project.alt} loading="lazy" width="1200" height="960" /><span className="image-index mono">({project.number})</span><span className="view-project">{t("View project")} <ArrowUpRight size={18} /></span></div><div className="project-meta"><div><span className="project-category mono">{project.category}</span><h3>{project.title}</h3><p>{project.summary}</p></div><span className="project-arrow"><ArrowUpRight size={25} strokeWidth={1.3} /></span></div></button>)}</div>
           <a className="drawings-collection reveal" href={drawingsHref} data-sound="open" onClick={event => {
             if (!ordinaryClick(event)) return;
             event.preventDefault();
@@ -180,12 +206,23 @@ export default function Home() {
       </div>
     </main>
     <footer hidden={surface !== "content"}><span>© {new Date().getFullYear()} {locale === "zh" ? "洪宇欣" : "Candice (Yuxin) Hong"}</span><span className="footer-note">{t("MADE WITH CURIOSITY.")}</span><a href="#work" onClick={event => { event.preventDefault(); showSection("work"); }}>{t("Back to top")} <ArrowUp size={14} /></a></footer>
-    <Dialog open={active !== null} onOpenChange={open => { if (!open) setActiveId(null); }}><DialogContent className="project-dialog" showCloseButton={false}>{active && <>
-      <div className="project-dialog-top"><span className="mono">{locale === "zh" ? "项目" : "PROJECT"} {active.number} / 04</span><div className="dialog-actions"><SoundToggle soundOn={soundOn} onToggle={() => void setSound(!soundOn)} /><LanguageSwitch /><DialogClose asChild><button className="menu-button" data-sound="close">{t("close")} <X size={17} aria-hidden="true" /></button></DialogClose></div></div>
-      <div className="case-heading"><span className="project-category mono">{active.category}</span><DialogTitle className="case-title">{active.title}</DialogTitle><DialogDescription className="case-description">{active.description}</DialogDescription><p className="case-type">{active.type}</p></div>
+    <Dialog open={active !== null} onOpenChange={open => { if (!open) closeProject(); }}><DialogContent className={`project-dialog${active?.id === "desktop-tides" ? " project-dialog-desktop-tides" : ""}`} showCloseButton={false} onCloseAutoFocus={event => {
+      if (!restoreGameProjectFocus.current) return;
+      event.preventDefault();
+      restoreGameProjectFocus.current = false;
+      const opener = gameProjectOpener.current;
+      const fallback = document.querySelector<HTMLElement>(surface === "content" ? "#work .work-heading" : ".gallery-title");
+      const target = opener?.isConnected && opener.getClientRects().length ? opener : fallback;
+      if (target) {
+        if (target === fallback) target.tabIndex = -1;
+        target.focus({ preventScroll: true });
+      }
+    }}>{active && <>
+      <div className="project-dialog-top"><span className="mono">{locale === "zh" ? "项目" : "PROJECT"} {active.number} / {projectCount}</span><div className="dialog-actions"><SoundToggle soundOn={soundOn} onToggle={() => void setSound(!soundOn)} /><LanguageSwitch /><DialogClose asChild><button className="menu-button" data-sound="close">{t("close")} <X size={17} aria-hidden="true" /></button></DialogClose></div></div>
+      <div className="case-heading"><span className="project-category mono">{active.category}</span><DialogTitle className="case-title">{active.title}</DialogTitle><DialogDescription className="case-description">{active.description}</DialogDescription><p className="case-type">{active.type}</p>{active.id === "desktop-tides" && <div className="case-play-row"><a className="case-play-link" href={`/projects/desktop-tides/?lang=${locale}`} data-sound="open">{t("开始试玩")}<ArrowUpRight size={20} aria-hidden="true" /></a><span>{t("建议使用电脑和鼠标 · 游戏内为中文")}</span></div>}</div>
       <img className={`case-cover cover-${active.id}`} src={`/images/${active.image}`} alt={active.alt} />
       <div className="case-content"><div><h3>{t("Focus / 设计议题")}</h3><p>{active.focus}</p></div><div><h3>{t("Process / 研究与探索")}</h3><p>{active.approach}</p></div><div><h3>{t("Outcome / 设计产出")}</h3><p>{active.outcome}</p></div><div><h3>{t("Methods / 方法与工具")}</h3><p>{active.tools}</p></div></div>
-      <div className="case-pages"><span className="mono case-page-label">{t("FROM THE PORTFOLIO / 项目过程")}</span>{active.pages.map(page => <img key={page} src={`/images/${active.id}-page-${page}.webp`} alt={locale === "zh" ? `${active.title} 原始作品集项目过程，第 ${page} 页` : `${active.title} original portfolio process, page ${page}`} loading="lazy" width="2024" height="716" />)}</div>
+      {active.pages.length > 0 && <div className="case-pages"><span className="mono case-page-label">{t("FROM THE PORTFOLIO / 项目过程")}</span>{active.pages.map(page => <img key={page} src={`/images/${active.id}-page-${page}.webp`} alt={locale === "zh" ? `${active.title} 原始作品集项目过程，第 ${page} 页` : `${active.title} original portfolio process, page ${page}`} loading="lazy" width="2024" height="716" />)}</div>}
       <DialogClose asChild><button className="case-back" data-sound="close">{t("返回精选作品")} <ArrowUpRight size={18} /></button></DialogClose>
     </>}</DialogContent></Dialog>
   </div>;

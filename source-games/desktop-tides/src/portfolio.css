@@ -1,0 +1,24 @@
+/* Portfolio navigation sits outside the playable bay. */
+.portfolio-return {
+  position: absolute;
+  top: 18px;
+  left: max(24px, calc((100vw - 800px) / 2));
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 28px;
+  color: #48675e;
+  font-size: 13px;
+  line-height: 1.5;
+  text-decoration: none;
+}
+.portfolio-return:hover { color: #1c4b49; }
+.portfolio-return:focus-visible { outline: 2px solid #48675e; outline-offset: 4px; }
+.desktop-shell { padding-top: 64px; padding-bottom: 24px; }
+.tide-app { width: min(800px, calc(100vw - 48px), calc((100dvh - 96px) * 1.333333)); }
+@media (max-width: 450px) {
+  .portfolio-return { top: 14px; left: 12px; }
+  .desktop-shell { padding: 56px 12px 20px; }
+  .tide-app { width: min(800px, calc(100vw - 24px), calc((100dvh - 84px) * 1.333333)); }
+}

@@ -2,9 +2,14 @@
 
 Live site: https://candicehong.cn/
 
+Desktop Tides is the fifth design project. Its playable release is at
+`/projects/desktop-tides/`; the portfolio detail can be shared with
+`/?lang=zh#desktop-tides` or `/?lang=en#desktop-tides`.
+See `docs/desktop-tides.md` for the independent editable game and rebuild steps.
+
 The repository root is the GitHub Pages publishing directory. `source/` contains
 the editable Next.js homepage; the independent About and Drawings pages are plain HTML/CSS/JS.
-Keep `CNAME`, `.nojekyll`, `images/`, `about/`, `drawings/`, and `assets/` when rebuilding.
+Keep `CNAME`, `.nojekyll`, `images/`, `about/`, `drawings/`, `projects/`, and `assets/` when rebuilding.
 
 ## Build the homepage
 
@@ -82,7 +87,7 @@ not loaded by the rebuilt homepage.
 
 `drawings/index.html` and `assets/drawings/drawings.css` / `drawings.js` implement
 the independent `/drawings/` collection, with shared language and sound preferences.
-The homepage adds a separate collection entry alongside its four design projects;
+The homepage adds a separate collection entry alongside its five design projects;
 it does not treat drawings as an additional design case study.
 
 The gallery displays eight original photographs from `images/drawings/`, ordered

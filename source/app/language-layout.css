@@ -300,7 +300,7 @@ html:lang(zh) .entry-title {
   }
 }
 
-/* Drawings is a separate collection, alongside the four design case studies. */
+/* Drawings is a separate collection alongside the design case studies. */
 .spiral-drawings img,
 .gallery-list-drawings > img {
   object-fit: contain;
@@ -426,3 +426,39 @@ html:lang(zh) .drawings-collection h2 {
 @media (prefers-reduced-motion: reduce) {
   .drawings-collection-action svg { transition: none; }
 }
+
+/* A single play action keeps the case study within the existing composition. */
+.case-play-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px 22px;
+  margin-top: 25px;
+}
+.case-play-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  min-height: 46px;
+  padding: 12px 20px;
+  background: var(--primary);
+  color: #14200c;
+  font-size: 15px;
+}
+.case-play-link:hover { background: #d8ffab; }
+.case-play-link:focus-visible { outline: 2px solid #fafafa; outline-offset: 4px; }
+.case-play-row > span {
+  color: #a3a49b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.case-cover.cover-desktop-tides {
+  display: block;
+  width: min(800px, 100%);
+  height: auto;
+  margin-inline: auto;
+  object-fit: contain;
+}
+html:lang(zh) .project-desktop-tides h3,
+html:lang(zh) .project-dialog-desktop-tides .case-title { letter-spacing: 0; }

@@ -8,7 +8,7 @@ import "./language-layout.css";
 
 export const metadata: Metadata = {
   title: "Candice Hong · Interaction & Visual Designer",
-  description: "Candice (Yuxin) Hong’s portfolio. Explore interaction design, visual storytelling, computational art and original drawings alongside Dream Illustrator, Buzzing, Recall and Consistent.",
+  description: "Candice (Yuxin) Hong’s portfolio. Explore interaction design, visual storytelling, computational art and original drawings alongside Dream Illustrator, Buzzing, Recall, Consistent and Desktop Tides.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "crocea",
+    "name": "大黄鱼",
+    "weightGrams": 800,
+    "appearance": "night"
+  },
+  {
+    "id": "red-seabream",
+    "name": "真鲷",
+    "weightGrams": 850,
+    "appearance": "day"
+  },
+  {
+    "id": "black-seabream",
+    "name": "黑鲷",
+    "weightGrams": 650,
+    "appearance": "any"
+  },
+  {
+    "id": "spotted-seabass",
+    "name": "花鲈",
+    "weightGrams": 1650,
+    "appearance": "night"
+  },
+  {
+    "id": "mullet",
+    "name": "鲻鱼",
+    "weightGrams": 1100,
+    "appearance": "any"
+  },
+  {
+    "id": "chub-mackerel",
+    "name": "鲐鱼",
+    "weightGrams": 750,
+    "appearance": "any"
+  },
+  {
+    "id": "filefish",
+    "name": "绿鳍马面鲀",
+    "weightGrams": 600,
+    "appearance": "day"
+  },
+  {
+    "id": "golden-pompano",
+    "name": "金鲳鱼",
+    "weightGrams": 950,
+    "appearance": "day"
+  }
+]

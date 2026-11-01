@@ -1108,5 +1108,75 @@
     "source": "Go to About, selected work, drawings, expertise or contact.",
     "zh": "跳转至个人简介、精选作品、绘画、技能专长或联系方式。",
     "en": "Go to About, selected work, drawings, expertise or contact."
+  },
+  {
+    "source": "Desktop Tides",
+    "zh": "桌边潮汐",
+    "en": "Desktop Tides"
+  },
+  {
+    "source": "在桌边，留一小片海。",
+    "zh": "在桌边，留一小片海。",
+    "en": "A small bay beside your desk."
+  },
+  {
+    "source": "GAME DESIGN · INTERACTIVE PROTOTYPE",
+    "zh": "游戏设计 · 交互原型",
+    "en": "GAME DESIGN · INTERACTIVE PROTOTYPE"
+  },
+  {
+    "source": "桌边潮汐游戏实景：浅海、礁石与游动的海洋生物",
+    "zh": "桌边潮汐游戏实景：浅海、礁石与游动的海洋生物",
+    "en": "Desktop Tides gameplay: a shallow bay, rocks and swimming sea creatures"
+  },
+  {
+    "source": "网页游戏原型 / 交互与体验设计",
+    "zh": "网页游戏原型 / 交互与体验设计",
+    "en": "Browser game prototype / Interaction & experience design"
+  },
+  {
+    "source": "一款可以随时停下来的桌面海湾小游戏。拨动水流、随机放入海洋生物，或钓一条还不知道名字的鱼。",
+    "zh": "一款可以随时停下来的桌面海湾小游戏。拨动水流、随机放入海洋生物，或钓一条还不知道名字的鱼。",
+    "en": "A small desktop bay to visit at your own pace. Stir the water, add a random sea creature, or catch a fish whose species is still a surprise."
+  },
+  {
+    "source": "一款可以随时停下来的桌面海湾小游戏。",
+    "zh": "一款可以随时停下来的桌面海湾小游戏。",
+    "en": "A small desktop bay to visit at your own pace."
+  },
+  {
+    "source": "让短暂的休息有一点可触碰的反馈，不设置任务或倒计时。",
+    "zh": "让短暂的休息有一点可触碰的反馈，不设置任务或倒计时。",
+    "en": "Give a short break a tangible response, without a task list or countdown."
+  },
+  {
+    "source": "围绕水波、拖动水流和盲钓反复调整操作反馈，逐步减少按钮和提示文字，让海湾成为画面的中心。",
+    "zh": "围绕水波、拖动水流和盲钓反复调整操作反馈，逐步减少按钮和提示文字，让海湾成为画面的中心。",
+    "en": "Iterate on ripples, dragged currents and blind fishing, reducing buttons and prompts to keep the bay at the center of the experience."
+  },
+  {
+    "source": "完成可在线试玩的原型，包含昼夜切换、三类生物随机投放、钓鱼小游戏和鱼类图鉴。",
+    "zh": "完成可在线试玩的原型，包含昼夜切换、三类生物随机投放、钓鱼小游戏和鱼类图鉴。",
+    "en": "A playable browser prototype with day and night, three kinds of sea creatures, a fishing minigame and a fish collection."
+  },
+  {
+    "source": "Interaction design / React / Canvas / WebGL / Prototyping",
+    "zh": "交互设计 / React / Canvas / WebGL / 原型制作",
+    "en": "Interaction design / React / Canvas / WebGL / Prototyping"
+  },
+  {
+    "source": "INDEX — 01/{count}",
+    "zh": "作品 — 01/{count}",
+    "en": "INDEX — 01/{count}"
+  },
+  {
+    "source": "开始试玩",
+    "zh": "开始试玩",
+    "en": "Play"
+  },
+  {
+    "source": "建议使用电脑和鼠标 · 游戏内为中文",
+    "zh": "建议使用电脑和鼠标 · 游戏内为中文",
+    "en": "Best with a mouse · Game interface in Chinese"
   }
 ]

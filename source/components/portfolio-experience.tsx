@@ -100,6 +100,13 @@ export function PortfolioExperience({ phase, onPhaseChange, onSound }: { phase: 
     }
     return () => { if (timer.current) clearTimeout(timer.current); };
   }, [onPhaseChange]);
+  useEffect(() => {
+    // A deep link can finish the intro while its greeting timer is pending.
+    if (phase === "complete" && timer.current) {
+      clearTimeout(timer.current);
+      timer.current = null;
+    }
+  }, [phase]);
   const finish = () => { if (timer.current) clearTimeout(timer.current); onPhaseChange("complete"); };
   const skip = () => { void onSound(false); finish(); };
   const enter = (withSound: boolean) => {
