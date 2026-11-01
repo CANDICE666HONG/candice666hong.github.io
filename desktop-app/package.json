@@ -1,0 +1,33 @@
+{
+  "name": "desktop-tides-windows",
+  "version": "1.0.0",
+  "private": true,
+  "description": "桌边潮汐 — a quiet, offline desktop bay",
+  "author": "Candice Hong",
+  "main": "main.cjs",
+  "scripts": {
+    "build": "node ../scripts/build-desktop.mjs",
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "45.2.1",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "cn.candicehong.desktop-tides",
+    "productName": "桌边潮汐",
+    "artifactName": "Desktop-Tides-Windows.exe",
+    "directories": { "output": "release", "buildResources": "resources" },
+    "files": ["main.cjs", "content/**", "resources/icon.ico", "package.json"],
+    "asar": true,
+    "compression": "maximum",
+    "electronLanguages": ["zh-CN", "en-US"],
+    "win": {
+      "target": [{ "target": "portable", "arch": ["x64"] }],
+      "icon": "resources/icon.ico",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "portable": { "requestExecutionLevel": "user", "unpackDirName": "DesktopTides-1.0.0" },
+    "publish": null
+  }
+}
