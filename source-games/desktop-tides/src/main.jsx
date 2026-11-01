@@ -12,8 +12,8 @@ createRoot(document.getElementById("root")).render(
       <a className="portfolio-return" href={`/?lang=${language}#desktop-tides`}>
         <span aria-hidden="true">←</span>{language === 'en' ? 'Back to portfolio' : '返回作品集'}
       </a>
-      <a className="portfolio-download" href="/downloads/desktop-tides-offline.zip" download="desktop-tides-offline.zip">
-        {language === 'en' ? 'Download offline' : '下载离线版'}<span aria-hidden="true">↓</span>
+      <a className="portfolio-download" href="https://github.com/CANDICE666HONG/candice666hong.github.io/releases/download/desktop-tides-v1.0.1/Desktop-Tides-Windows.exe" title={language === 'en' ? 'Windows 10/11 · 64-bit · No installation needed' : 'Windows 10/11 · 64 位 · 双击即玩'}>
+        {language === 'en' ? 'Download for Windows' : '下载 Windows 版'}<span aria-hidden="true">↓</span>
       </a>
     </nav>
     <App />

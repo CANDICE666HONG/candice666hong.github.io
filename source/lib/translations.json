@@ -1180,13 +1180,13 @@
     "en": "Best with a mouse · Game interface in Chinese"
   },
   {
-    "source": "下载离线版",
-    "zh": "下载离线版",
-    "en": "Download offline"
+    "source": "下载 Windows 版",
+    "zh": "下载 Windows 版",
+    "en": "Download for Windows"
   },
   {
-    "source": "解压后双击 HTML 文件即可离线玩",
-    "zh": "解压后双击 HTML 文件即可离线玩",
-    "en": "Unzip and open the HTML file to play offline"
+    "source": "Windows 10/11 · 64 位 · 双击即玩",
+    "zh": "Windows 10/11 · 64 位 · 双击即玩",
+    "en": "Windows 10/11 · 64-bit · No installation needed"
   }
 ]
