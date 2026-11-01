@@ -1178,5 +1178,15 @@
     "source": "建议使用电脑和鼠标 · 游戏内为中文",
     "zh": "建议使用电脑和鼠标 · 游戏内为中文",
     "en": "Best with a mouse · Game interface in Chinese"
+  },
+  {
+    "source": "下载离线版",
+    "zh": "下载离线版",
+    "en": "Download offline"
+  },
+  {
+    "source": "解压后双击 HTML 文件即可离线玩",
+    "zh": "解压后双击 HTML 文件即可离线玩",
+    "en": "Unzip and open the HTML file to play offline"
   }
 ]

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Sun, MoonStars, Eye, EyeSlash, Pause, Play, ArrowCounterClockwise, Waves, FishSimple, Shuffle, BookOpen } from '@phosphor-icons/react';
+import { Eye, EyeSlash, Pause, Play, ArrowCounterClockwise, Waves, FishSimple, Shuffle, BookOpen } from '@phosphor-icons/react';
 import { createSimulation, WORLD_WIDTH, WORLD_HEIGHT, shorelineX } from './game/simulation.js';
 import { createWaterRenderer } from './game/water.js';
 import { createSceneRenderer } from './game/scene.js';
@@ -8,6 +8,8 @@ import { makeSelection, screenToWorld, randomCreatureType, SUPPORTED_CREATURE_TY
 import { FishingGame } from './FishingGame.jsx';
 import { CollectionBook } from './CollectionBook.jsx';
 import { restoreCollection, recordCatch } from './game/collection.js';
+import { useDayNight } from './useDayNight.js';
+import { DayNightControl } from './DayNightControl.jsx';
 
 const SAVE_KEY = 'desktop-tides-v1';
 const COLLECTION_KEY = 'desktop-tides-collection-v1';
@@ -22,7 +24,7 @@ function readCollection() {
 
 export function App() {
   const initial = useRef(readSave());
-  const [mode, setMode] = useState(initial.current?.night === true ? 'night' : 'day');
+  const { mode, preference: timePreference, setPreference: setTimePreference } = useDayNight();
   const [paused, setPaused] = useState(false), [quiet, setQuiet] = useState(false);
   const [placement, setPlacement] = useState('random'), [ready, setReady] = useState(false);
   const [overlay, setOverlay] = useState(null);
@@ -72,7 +74,7 @@ export function App() {
     if (id != null && sceneRef.current?.hasPointerCapture(id)) sceneRef.current.releasePointerCapture(id);
   }
   function toggleNight() {
-    setMode(value => value === 'day' ? 'night' : 'day');
+    setTimePreference(state.current.mode === 'day' ? 'night' : 'day');
   }
   function toggleQuiet() {
     cancelGesture();
@@ -258,8 +260,7 @@ export function App() {
     <button className="restore-button" aria-label="显示界面" title="显示界面 · H" onClick={toggleQuiet}><Eye size={20} weight="light" /></button>
   ) : (
     <div className="top-controls ui" role="group" aria-label="海湾控制">
-      <button className="icon-button theme-button" aria-label={mode === 'day' ? '切换月夜' : '切换日光'} title={mode === 'day' ? '月夜 · N' : '日光 · N'} onClick={toggleNight}>
-        {mode === 'day' ? <Sun size={22} weight="light" /> : <MoonStars size={22} weight="light" />}</button>
+      <DayNightControl mode={mode} preference={timePreference} onChange={setTimePreference} />
       <button className="icon-button pause-button" aria-label={paused ? '继续游动' : '暂停游动'} aria-pressed={paused} data-hint={paused ? '继续 · 空格' : '暂停 · 空格'} onClick={() => setPaused(value => !value)}>
         {paused ? <Play size={19} weight="fill" /> : <Pause size={19} weight="light" />}</button>
       <button className="icon-button" aria-label="隐藏界面" title="静静看海 · H" onClick={toggleQuiet}><EyeSlash size={21} weight="light" /></button>

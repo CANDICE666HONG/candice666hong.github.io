@@ -8,9 +8,14 @@ const language = new URLSearchParams(window.location.search).get('lang') === 'en
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <a className="portfolio-return" href={`/?lang=${language}#desktop-tides`}>
-      <span aria-hidden="true">←</span>{language === 'en' ? 'Back to portfolio' : '返回作品集'}
-    </a>
+    <nav className="portfolio-nav" aria-label={language === 'en' ? 'Game links' : '游戏链接'}>
+      <a className="portfolio-return" href={`/?lang=${language}#desktop-tides`}>
+        <span aria-hidden="true">←</span>{language === 'en' ? 'Back to portfolio' : '返回作品集'}
+      </a>
+      <a className="portfolio-download" href="/downloads/desktop-tides-offline.zip" download="desktop-tides-offline.zip">
+        {language === 'en' ? 'Download offline' : '下载离线版'}<span aria-hidden="true">↓</span>
+      </a>
+    </nav>
     <App />
   </React.StrictMode>,
 );

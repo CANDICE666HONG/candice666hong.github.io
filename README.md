@@ -6,6 +6,11 @@ Desktop Tides is the fifth design project. Its playable release is at
 `/projects/desktop-tides/`; the portfolio detail can be shared with
 `/?lang=zh#desktop-tides` or `/?lang=en#desktop-tides`.
 See `docs/desktop-tides.md` for the independent editable game and rebuild steps.
+The game defaults to the player's local clock (06:00–18:00 day, otherwise night),
+with saved Auto / Day / Night choices in its existing light control.
+An offline ZIP is available at `/downloads/desktop-tides-offline.zip`.
+Run `node scripts/build-offline.mjs` after changing the game to refresh this download;
+see `docs/offline-play.md` for the single-file version and storage limitations.
 
 The repository root is the GitHub Pages publishing directory. `source/` contains
 the editable Next.js homepage; the independent About and Drawings pages are plain HTML/CSS/JS.

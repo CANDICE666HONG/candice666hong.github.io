@@ -74,6 +74,45 @@ button:focus-visible {
   display: flex;
   gap: 0;
 }
+.day-night-control { position: relative; }
+.theme-auto-mark {
+  position: absolute;
+  right: 6px;
+  bottom: 5px;
+  display: grid;
+  place-items: center;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  color: #edf7eb;
+  background: #346965;
+  pointer-events: none;
+}
+.day-night-options {
+  position: absolute;
+  top: calc(100% + 3px);
+  right: 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 162px;
+  padding: 3px 6px;
+  border-radius: 5px;
+  background: #e7f1e7f5;
+  box-shadow: 0 3px 14px #073c4b26;
+}
+.day-night-options button {
+  min-height: 38px;
+  padding: 3px 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: #41645b;
+  font-size: 12px;
+}
+.day-night-options button[aria-checked="true"] { color: #164a40; border-bottom-color: #5e967d; }
+.day-night-options button:hover { color: #164a40; background: #c5dfd03d; }
+.day-night-options button:focus-visible { outline: 1px solid #538974; outline-offset: -2px; }
 .icon-button, .restore-button {
   position: relative;
   display: grid;
