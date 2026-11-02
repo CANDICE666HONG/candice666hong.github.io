@@ -49,6 +49,7 @@ export default function Home() {
   const [activeId, setActiveId] = useState<string | null>(null);
   const active = projects.find(project => project.id === activeId) ?? null;
   const projectCount = String(projects.length).padStart(2, "0");
+  const workCount = String(galleryProjects.length).padStart(2, "0");
   const projectReturnHash = useRef("");
   const gameProjectOpener = useRef<HTMLElement | null>(null);
   const restoreGameProjectFocus = useRef(false);
@@ -187,16 +188,16 @@ export default function Home() {
       <div hidden={surface !== "gallery"}><SpiralGallery projects={galleryProjects} mode={galleryMode} enabled={surface === "gallery" && (entryPhase === "transition" || entryPhase === "complete")} paused={menuOpen || active !== null} soundOn={soundOn} onSound={() => void setSound(!soundOn)} onOpen={openGalleryItem} onAbout={showAbout} /></div>
       <div className="portfolio-content" hidden={surface !== "content"}>
         <section id="work" className="work-section section-shell">
-          <div className="section-heading reveal"><div><SectionLabel index="02">{t("SELECTED WORK / 精选作品")}</SectionLabel><h1 className="work-heading">{t("A few things")}<br />{t("I’ve put my ")}<em>{t("mind")}</em>{t(" into.")}</h1></div><span className="project-count mono">{t("INDEX — 01/{count}", { count: projectCount })}</span></div>
-          <div className="project-grid">{projects.map(project => <button key={project.id} className={`project-card project-${project.id} reveal`} data-sound="open" onClick={() => openProject(project.id)} aria-label={t("查看 {title} 项目详情", { title: project.title })}><div className="project-image"><img src={`/images/${project.image}`} alt={project.alt} loading="lazy" width="1200" height="960" /><span className="image-index mono">({project.number})</span><span className="view-project">{t("View project")} <ArrowUpRight size={18} /></span></div><div className="project-meta"><div><span className="project-category mono">{project.category}</span><h3>{project.title}</h3><p>{project.summary}</p></div><span className="project-arrow"><ArrowUpRight size={25} strokeWidth={1.3} /></span></div></button>)}</div>
-          <a className="drawings-collection reveal" href={drawingsHref} data-sound="open" onClick={event => {
+          <div className="section-heading reveal"><div><SectionLabel index="02">{t("SELECTED WORK / 精选作品")}</SectionLabel><h1 className="work-heading">{t("A few things")}<br />{t("I’ve put my ")}<em>{t("mind")}</em>{t(" into.")}</h1></div><span className="project-count mono">{t("INDEX — 01/{count}", { count: workCount })}</span></div>
+          <div className="project-grid">{projects.map(project => <button key={project.id} className={`project-card project-${project.id} reveal`} data-sound="open" onClick={() => openProject(project.id)} aria-label={t("查看 {title} 项目详情", { title: project.title })}><div className="project-image"><img src={`/images/${project.image}`} alt={project.alt} loading="lazy" width="1200" height="960" /><span className="image-index mono">({project.number})</span><span className="view-project">{t("View project")} <ArrowUpRight size={18} /></span></div><div className="project-meta"><div><span className="project-category mono">{project.category}</span><h3>{project.title}</h3><p>{project.summary}</p></div><span className="project-arrow"><ArrowUpRight size={25} strokeWidth={1.3} /></span></div></button>)}
+          <a className="project-card project-drawings reveal" href={drawingsHref} aria-label={t("Explore the drawings collection")} data-sound="open" onClick={event => {
             if (!ordinaryClick(event)) return;
             event.preventDefault();
             showPage("/drawings/");
           }}>
-            <span className="drawings-collection-image"><img src="/images/drawings/drawing-55.jpg" alt={t("A drawing from Candice Hong’s collection")} loading="lazy" width="1280" height="959" /></span>
-            <div className="drawings-collection-copy"><span className="drawings-collection-category mono">{t("DRAWINGS · VISUAL EXPLORATION")}</span><h2>{t("Drawings")}</h2><span className="drawings-collection-description">{t("Figures, imagined nature and stories in line.")}</span><span className="drawings-collection-action">{t("Explore drawings")}<ArrowUpRight size={23} strokeWidth={1.4} aria-hidden="true" /></span></div>
-          </a>
+            <div className="project-image"><img src="/images/drawings/drawing-55.jpg" alt={t("A drawing from Candice Hong’s collection")} loading="lazy" width="1280" height="959" /><span className="image-index mono">({workCount})</span><span className="view-project">{t("Explore drawings")} <ArrowUpRight size={18} aria-hidden="true" /></span></div>
+            <div className="project-meta"><div><span className="project-category mono">{t("DRAWINGS · VISUAL EXPLORATION")}</span><h3>{t("Drawings")}</h3><p>{t("Figures, imagined nature and stories in line.")}</p></div><span className="project-arrow"><ArrowUpRight size={25} strokeWidth={1.3} aria-hidden="true" /></span></div>
+          </a></div>
         </section>
         <section id="skills" className="skills-section section-shell">
           <div className="section-heading reveal"><div><SectionLabel index="03">{t("EXPERTISE / 技能专长")}</SectionLabel><h2>{t("Different tools.")}<br /><span className="muted-line">{t("One curious mind.")}</span></h2></div><p className="skills-note">{t("从理解问题，到原型与表达。")}<br />{t("让每一种工具，为体验服务。")}</p></div>
