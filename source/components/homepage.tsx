@@ -31,15 +31,18 @@ export default function Home() {
     approach: t(project.approach), outcome: t(project.outcome), tools: t(project.tools),
     summary: t(project.description.split("。")[0] + "。"),
   })), [t]);
+  const entryProjects = useMemo(() => projects.map(project => project.id === "desktop-tides" ? {
+    ...project, image: "desktop-tides-cover.webp", alt: t("Desktop Tides cover: a small bay at your desk"),
+  } : project), [projects, t]);
   const drawingsHref = `/drawings/?lang=${locale}`;
-  const galleryProjects = useMemo<GalleryProject[]>(() => [...projects, {
+  const galleryProjects = useMemo<GalleryProject[]>(() => [...entryProjects, {
     id: "drawings", number: String(projects.length + 1).padStart(2, "0"), title: t("Drawings"), image: "drawings-cover.webp",
     alt: t("Cover of Candice Hong’s drawing collection"),
     category: t("DRAWINGS · VISUAL EXPLORATION"),
     description: t("Figures, imagined nature and stories in line."),
     summary: t("Figures, imagined nature and stories in line."),
     href: drawingsHref, actionLabel: t("Explore the drawings collection"),
-  }], [projects, t, drawingsHref]);
+  }], [entryProjects, projects.length, t, drawingsHref]);
   const [entryPhase, setEntryPhase] = useState<EntryPhase>("prelude");
   const [surface, setSurface] = useState<"gallery" | "content">("gallery");
   const [galleryMode, setGalleryMode] = useState<GalleryMode>("spiral");
@@ -189,7 +192,7 @@ export default function Home() {
       <div className="portfolio-content" hidden={surface !== "content"}>
         <section id="work" className="work-section section-shell">
           <div className="section-heading reveal"><div><SectionLabel index="02">{t("SELECTED WORK / 精选作品")}</SectionLabel><h1 className="work-heading">{t("A few things")}<br />{t("I’ve put my ")}<em>{t("mind")}</em>{t(" into.")}</h1></div><span className="project-count mono">{t("INDEX — 01/{count}", { count: workCount })}</span></div>
-          <div className="project-grid">{projects.map(project => <button key={project.id} className={`project-card project-${project.id} reveal`} data-sound="open" onClick={() => openProject(project.id)} aria-label={t("查看 {title} 项目详情", { title: project.title })}><div className="project-image"><img src={`/images/${project.image}`} alt={project.alt} loading="lazy" width="1200" height="960" /><span className="image-index mono">({project.number})</span><span className="view-project">{t("View project")} <ArrowUpRight size={18} /></span></div><div className="project-meta"><div><span className="project-category mono">{project.category}</span><h3>{project.title}</h3><p>{project.summary}</p></div><span className="project-arrow"><ArrowUpRight size={25} strokeWidth={1.3} /></span></div></button>)}
+          <div className="project-grid">{entryProjects.map(project => <button key={project.id} className={`project-card project-${project.id} reveal`} data-sound="open" onClick={() => openProject(project.id)} aria-label={t("查看 {title} 项目详情", { title: project.title })}><div className="project-image"><img src={`/images/${project.image}`} alt={project.alt} loading="lazy" width="1200" height={project.id === "desktop-tides" ? 900 : 960} /><span className="image-index mono">({project.number})</span><span className="view-project">{t("View project")} <ArrowUpRight size={18} /></span></div><div className="project-meta"><div><span className="project-category mono">{project.category}</span><h3>{project.title}</h3><p>{project.summary}</p></div><span className="project-arrow"><ArrowUpRight size={25} strokeWidth={1.3} /></span></div></button>)}
           <a className="project-card project-drawings reveal" href={drawingsHref} aria-label={t("Explore the drawings collection")} data-sound="open" onClick={event => {
             if (!ordinaryClick(event)) return;
             event.preventDefault();

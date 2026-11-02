@@ -300,10 +300,13 @@ html:lang(zh) .entry-title {
   }
 }
 
-/* Keep the complete designed cover readable across every card ratio. */
+/* Keep the complete designed covers readable across every card ratio. */
 .spiral-drawings img,
 .gallery-list-drawings > img,
-.project-drawings .project-image > img {
+.project-drawings .project-image > img,
+.spiral-desktop-tides img,
+.gallery-list-desktop-tides > img,
+.project-desktop-tides .project-image > img {
   object-fit: contain;
   object-position: center;
   background: #0c0d0c;

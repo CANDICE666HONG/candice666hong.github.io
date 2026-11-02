@@ -195,7 +195,7 @@ export function SpiralGallery({ projects, mode, enabled, paused, soundOn, onSoun
         <span className="gallery-list-copy"><span className="gallery-list-category">{project.category}</span><span className="gallery-list-name">{project.title}</span><span className="gallery-list-description">{project.summary ?? project.description}</span></span><ArrowUpRight className="gallery-list-arrow" strokeWidth={1.2} aria-hidden="true" /></>;
       return project.href
         ? <a className={`gallery-list-item gallery-list-${project.id}`} key={project.id} href={project.href} data-sound="open" onClick={event => followCollection(event, project)}>{content}</a>
-        : <button className="gallery-list-item" key={project.id} data-sound="open" onClick={() => onOpen(project.id)}>{content}</button>;
+        : <button className={`gallery-list-item gallery-list-${project.id}`} key={project.id} data-sound="open" onClick={() => onOpen(project.id)}>{content}</button>;
     })}</div>}
     <div className="gallery-bottom">
       <button className="gallery-about" data-sound="open" onClick={onAbout} aria-label={t("About me · Candice Hong")}>
