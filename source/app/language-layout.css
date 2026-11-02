@@ -300,12 +300,14 @@ html:lang(zh) .entry-title {
   }
 }
 
-/* Drawings is a separate collection alongside the design case studies. */
+/* Keep the complete designed cover readable across every card ratio. */
 .spiral-drawings img,
-.gallery-list-drawings > img {
+.gallery-list-drawings > img,
+.project-drawings .project-image > img {
   object-fit: contain;
   object-position: center;
-  background: #1a1a18;
+  background: #0c0d0c;
+  padding: 0;
 }
 .gallery-keyboard-projects a {
   position: absolute;
@@ -327,12 +329,6 @@ html:lang(zh) .entry-title {
   border-radius: 4px;
   min-width: 270px;
 }
-/* Collection links use the same card layout and motion as the case studies. */
-.project-drawings .project-image > img {
-  object-fit: contain;
-  padding: clamp(12px, 1.4vw, 22px);
-}
-.project-drawings .project-image { background: #1a1a18; }
 .navigation-dialog .menu-top,
 .navigation-dialog .menu-links,
 .navigation-dialog .menu-email {

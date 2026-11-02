@@ -33,8 +33,8 @@ export default function Home() {
   })), [t]);
   const drawingsHref = `/drawings/?lang=${locale}`;
   const galleryProjects = useMemo<GalleryProject[]>(() => [...projects, {
-    id: "drawings", number: String(projects.length + 1).padStart(2, "0"), title: t("Drawings"), image: "drawings/drawing-55.jpg",
-    alt: t("A drawing from Candice Hong’s collection"),
+    id: "drawings", number: String(projects.length + 1).padStart(2, "0"), title: t("Drawings"), image: "drawings-cover.webp",
+    alt: t("Cover of Candice Hong’s drawing collection"),
     category: t("DRAWINGS · VISUAL EXPLORATION"),
     description: t("Figures, imagined nature and stories in line."),
     summary: t("Figures, imagined nature and stories in line."),
@@ -195,7 +195,7 @@ export default function Home() {
             event.preventDefault();
             showPage("/drawings/");
           }}>
-            <div className="project-image"><img src="/images/drawings/drawing-55.jpg" alt={t("A drawing from Candice Hong’s collection")} loading="lazy" width="1280" height="959" /><span className="image-index mono">({workCount})</span><span className="view-project">{t("Explore drawings")} <ArrowUpRight size={18} aria-hidden="true" /></span></div>
+            <div className="project-image"><img src="/images/drawings-cover.webp" alt={t("Cover of Candice Hong’s drawing collection")} loading="lazy" width="1448" height="1086" /><span className="image-index mono">({workCount})</span><span className="view-project">{t("Explore drawings")} <ArrowUpRight size={18} aria-hidden="true" /></span></div>
             <div className="project-meta"><div><span className="project-category mono">{t("DRAWINGS · VISUAL EXPLORATION")}</span><h3>{t("Drawings")}</h3><p>{t("Figures, imagined nature and stories in line.")}</p></div><span className="project-arrow"><ArrowUpRight size={25} strokeWidth={1.3} aria-hidden="true" /></span></div>
           </a></div>
         </section>
